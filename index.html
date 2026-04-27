@@ -65,17 +65,35 @@ body{height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;background:#00
 <div id="login-screen"><img src="SolarisGG-Logo.png"><h1>SolarisGG</h1><button id="login-btn" onclick="login()">Iniciar sesión</button></div>
 <div id="desktop">
 <div class="icons">
-<div class="icon" onclick="openApp('zoyl')"><img src="ZOYLSolaris.png"><span>ZOYL</span></div>
-<div class="icon" onclick="location.href='ShootOut.html'"><img src="arma.png"><span>ShootOut</span></div>
-<div class="icon" onclick="location.href='GGCraft.html'"><img src="bloque.png"><span>GGCraft</span></div>
+
+  <div class="icon" onclick="openApp('zoyl')">
+    <img src="ZOYLSolaris.png">
+    <span>ZOYL</span>
+  </div>
+
+  <div class="icon" onclick="openApp('shootout')">
+    <img src="arma.png">
+    <span>ShootOut</span>
+  </div>
+
+  <div class="icon" onclick="openApp('ggcraft')">
+    <img src="bloque.png">
+    <span>GGCraft</span>
+  </div>
+
 </div>
+
 <div id="search-menu">
 <input id="search-input" onkeyup="filterGames()" placeholder="Buscar juegos...">
 <h3 class="search-section" id="sec-our">Nuestros Juegos</h3>
 <div id="our-games">
 <div class="search-item" data-cat="our" onclick="openApp('zoyl')"><img src="ZOYLSolaris.png" class="search-icon"><span>ZOYL</span></div>
-<div class="search-item" data-cat="our" onclick="location.href='GGCraft.html'"><img src="bloque.png" class="search-icon"><span>GGCraft</span></div>
-<div class="search-item" data-cat="our" onclick="location.href='ShootOut.html'"><img src="arma.png" class="search-icon"><span>ShootOut</span></div>
+<div class="icon" onclick="openApp('ggcraft')">
+  <img src="bloque.png"><span>GGCraft</span>
+</div>
+<div class="icon" onclick="openApp('shootout')">
+  <img src="arma.png"><span>ShootOut</span>
+</div>
 </div>
 <h3 class="search-section" id="sec-other">Otros Juegos</h3>
 <div id="other-games">
@@ -97,11 +115,51 @@ body{height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;background:#00
 <div class="window-header"><img class="window-header-icon" src="ajustes.png"><div class="window-title">Ajustes</div><div class="window-buttons"><button class="win-btn" onclick="minimizeApp('settings')">–</button><button class="win-btn" onclick="maximizeApp('settings')">□</button><button class="win-btn close" onclick="closeApp('settings')">X</button></div></div>
 <div class="window-content"><p>Seleccionar idioma:</p><select style="width:100%;padding:8px;border-radius:8px;border:none;outline:none;font-family:'Lexend'"><option>Español</option><option>Inglés</option><option>Francés</option></select></div>
 </div>
+
 <div id="zoyl-window" class="window">
-<div class="window-header"><img class="window-header-icon" src="ZOYLSolaris.png"><div class="window-title">ZOYL</div><div class="window-buttons"><button class="win-btn" onclick="minimizeApp('zoyl')">–</button><button class="win-btn" onclick="maximizeApp('zoyl')">□</button><button class="win-btn close" onclick="closeApp('zoyl')">X</button></div></div>
+  <div class="window-header">
+    <img class="window-header-icon" src="ZOYLSolaris.png">
+    <div class="window-title">ZOYL</div>
+    <div class="window-buttons">
+      <button class="win-btn" onclick="minimizeApp('zoyl')">–</button>
+      <button class="win-btn" onclick="maximizeApp('zoyl')">□</button>
+      <button class="win-btn close" onclick="closeApp('zoyl')">X</button>
+    </div>
+  </div>
 <div class="window-content"><iframe src="https://turbowarp.org/805031560/embed" style="width:100%;height:100%;border:none;border-radius:8px"></iframe></div>
 </div>
 </div>
+<div id="ggcraft-window" class="window">
+  <div class="window-header">
+    <img class="window-header-icon" src="bloque.png">
+    <div class="window-title">GGCraft</div>
+    <div class="window-buttons">
+      <button class="win-btn" onclick="minimizeApp('ggcraft')">–</button>
+      <button class="win-btn" onclick="maximizeApp('ggcraft')">□</button>
+      <button class="win-btn close" onclick="closeApp('ggcraft')">X</button>
+    </div>
+  </div>
+  <div class="window-content">
+    <iframe src="GGCraft.html" style="width:100%;height:100%;border:none;border-radius:8px"></iframe>
+  </div>
+</div>
+<div id="shootout-window" class="window">
+  <div class="window-header">
+    <img class="window-header-icon" src="arma.png">
+    <div class="window-title">ShootOut</div>
+    <div class="window-buttons">
+      <button class="win-btn" onclick="minimizeApp('shootout')">–</button>
+      <button class="win-btn" onclick="maximizeApp('shootout')">□</button>
+      <button class="win-btn close" onclick="closeApp('shootout')">X</button>
+    </div>
+  </div>
+  <div class="window-content">
+    <iframe src="ShootOut.html" style="width:100%;height:100%;border:none;border-radius:8px"></iframe>
+  </div>
+</div>
+
+//FINVENTANAS
+
 <script>
 let z=50;const winReg={};
 function login(){document.getElementById("login-screen").style.transform="translateY(-100%)";}
@@ -118,6 +176,16 @@ function closeApp(id){
     // Matar proceso del juego ZOYL
     if(id === "zoyl"){
         const frame = document.querySelector("#zoyl-window iframe");
+        frame.src = frame.src;
+    }
+    
+    if(id === "ggcraft"){
+        const frame = document.querySelector("#ggcraft-window iframe");
+        frame.src = frame.src;
+    }
+ 
+    if(id === "shootout"){
+        const frame = document.querySelector("#shootout-window iframe");
         frame.src = frame.src;
     }
 
@@ -141,6 +209,6 @@ function filterGames(){const q=document.getElementById("search-input").value.toL
 function updateDateTime(){const n=new Date(),d=String(n.getDate()).padStart(2,"0"),mo=String(n.getMonth()+1).padStart(2,"0"),y=String(n.getFullYear()).slice(2),h=String(n.getHours()).padStart(2,"0"),mi=String(n.getMinutes()).padStart(2,"0");const short=`${d}/${mo}/${y} | ${h}:${mi}`;document.getElementById("taskbar-short").textContent=short;const days=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"],months=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];const detailed=`${days[n.getDay()]}, ${n.getDate()} de ${months[n.getMonth()]} de ${n.getFullYear()} — ${h}:${mi}`;document.getElementById("date-tooltip").textContent=detailed;}
 setInterval(updateDateTime,1000);updateDateTime();
 const dtHover=document.getElementById("taskbar-short"),tooltip=document.getElementById("date-tooltip");dtHover.addEventListener("mouseenter",()=>{tooltip.style.display="block";});dtHover.addEventListener("mouseleave",()=>{tooltip.style.display="none";});
-window.onload=()=>{registerWindow("settings","ajustes.png","settings-window");registerWindow("zoyl","ZOYLSolaris.png","zoyl-window");};
+window.onload=()=>{registerWindow("settings","ajustes.png","settings-window");registerWindow("zoyl","ZOYLSolaris.png","zoyl-window");registerWindow("ggcraft", "bloque.png", "ggcraft-window");registerWindow("shootout", "arma.png", "shootout-window");};
 </script>
 </body></html>
