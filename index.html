@@ -1,256 +1,126 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>SolarisGG Network</title><link rel="icon" type="image/png" href="SolarisGG-Logo.png?v=9999"><link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet"><style>
-body{margin:0;padding:0;height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;}
-#login-btn {
-  font-family: "Lexend", sans-serif !important;
-}
-/* LOADING */
-#loading-screen{position:absolute;width:100%;height:100%;background:black;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:20;animation:fadeOut 1s ease forwards;animation-delay:3.5s;}
-#loading-logo{width:200px;height:200px;animation:logoAnim 3s ease;}
-@keyframes logoAnim{0%{opacity:0;transform:scale(.6);}50%{opacity:1;transform:scale(1);}100%{opacity:1;transform:scale(1.05);}}
-#loading-bar{width:300px;height:18px;border-radius:10px;background:rgba(255,255,255,.2);margin-top:25px;overflow:hidden;}
-#loading-progress{width:0;height:100%;background:linear-gradient(90deg,#00aaff,#00ffea);animation:loadAnim 3s ease forwards;}
-@keyframes loadAnim{0%{width:0;}100%{width:100%;}}
-@keyframes fadeOut{0%{opacity:1;}100%{opacity:0;visibility:hidden;}}
-/* LOGIN */
-#login-screen{position:absolute;width:100%;height:100%;background:url('SolarisGGFondo.png');background-size:cover;background-position:center;backdrop-filter:blur(6px);display:flex;flex-direction:column;justify-content:center;align-items:center;transition:transform 1s ease;z-index:10;}
-#login-screen img{width:180px;height:180px;border-radius:50%;margin-bottom:20px;box-shadow:0 8px 25px rgba(0,0,0,.4);}
-#login-screen h1{font-size:48px;color:white;text-shadow:0 3px 8px rgba(0,0,0,.6);margin-bottom:30px;font-weight:700;}
-#login-btn{padding:14px 40px;font-size:22px;border:none;border-radius:12px;background:rgba(255,255,255,.85);cursor:pointer;transition:.25s;font-weight:600;}
-#login-btn:hover{background:white;transform:scale(1.05);}
-/* DESKTOP */
-#desktop{width:100%;height:100%;background:url('SolarisGGFondo.png');background-size:cover;background-position:center;position:absolute;top:0;left:0;z-index:1;}
-.icons{position:absolute;top:40px;left:40px;display:flex;flex-direction:column;gap:35px;}
-.icon{width:90px;text-align:center;cursor:pointer;}
-.icon img{width:64px;height:64px;margin-bottom:6px;transition:.2s;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));}
-.icon:hover img{transform:scale(1.12);}
-.icon span{font-size:14px;color:white;text-shadow:0 2px 4px rgba(0,0,0,.7);}
-/* TASKBAR */
-.taskbar{position:absolute;bottom:0;width:100%;height:68px;background:rgba(30,30,30,.85);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.25);display:flex;align-items:center;z-index:999999;}
-#search-btn{position:absolute;left:15px;cursor:pointer;width:34px;height:34px;transition:.2s;}
-#search-btn:hover{transform:scale(1.15);}
-#taskbar-apps{position:absolute;left:70px;display:flex;align-items:center;gap:18px;height:100%;}
-.taskbar-app-icon-wrapper{position:relative;width:32px;height:32px;display:flex;justify-content:center;align-items:center;}
-.taskbar-app-icon{width:32px;height:32px;border-radius:6px;cursor:pointer;opacity:.8;transition:.2s;}
-.taskbar-app-icon.active{opacity:1;transform:scale(1.05);}
-.taskbar-app-icon:hover{opacity:1;transform:scale(1.1);}
-.taskbar-indicator{position:absolute;bottom:-6px;width:14px;height:3px;background:white;border-radius:10px;opacity:0;transition:.25s ease;}
-.taskbar-datetime{position:absolute;right:200px;display:flex;align-items:center;gap:8px;font-size:17px;color:white;font-weight:600;}
-.separator{opacity:.6;}
-.taskbar-datetime:hover::after{content:attr(data-full);position:absolute;left:50%;transform:translateX(-50%);bottom:50px;background:rgba(40,40,40,.95);padding:8px 14px;border-radius:6px;font-size:14px;white-space:nowrap;color:white;opacity:0;animation:tooltipFade .25s ease forwards;}
-@keyframes tooltipFade{0%{opacity:0;transform:translate(-50%,10px);}100%{opacity:1;transform:translate(-50%,0);}}
-.taskbar-title{position:absolute;right:25px;display:flex;align-items:center;gap:8px;font-size:22px;color:white;font-weight:700;}
-.taskbar-title img{width:30px;height:30px;border-radius:6px;}
-/* SEARCH MENU */
-#search-menu{position:absolute;bottom:90px;left:10px;width:320px;max-width:calc(100% - 20px);height:440px;box-sizing:border-box;overflow-y:auto;overflow-x:hidden;background:rgba(30,30,30,.85);backdrop-filter:blur(10px);border-radius:12px;padding:16px;display:none;flex-direction:column;z-index:999998;font-family:"Lexend";}
-#search-menu::-webkit-scrollbar{width:6px;}
-#search-menu::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:10px;}
-@keyframes menuOpen{0%{transform:translateY(20px);opacity:0;}100%{transform:translateY(0);opacity:1;}}
-@keyframes menuClose{0%{transform:translateY(0);opacity:1;}100%{transform:translateY(20px);opacity:0;}}
-#search-input{width:100%;padding:10px;border-radius:8px;border:none;outline:none;font-size:15px;margin-bottom:16px;box-sizing:border-box;font-family:"Lexend";}
-.search-section{color:white;font-size:18px;font-weight:600;margin:10px 0 8px 2px;opacity:.9;font-family:"Lexend";}
-.search-item{padding:12px;background:rgba(255,255,255,.1);margin-bottom:10px;border-radius:8px;color:white;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:12px;font-family:"Lexend";}
-.search-item:hover{background:rgba(255,255,255,.2);}
-.search-icon{width:32px;height:32px;border-radius:6px;object-fit:cover;}
-#no-results{display:none;color:white;opacity:.8;margin-top:10px;font-size:16px;text-align:center;font-family:"Lexend";}
-#settings-btn-inside{position:absolute;right:15px;bottom:15px;width:32px;height:32px;cursor:pointer;opacity:.85;transition:.2s;}
-#settings-btn-inside:hover{transform:scale(1.15);opacity:1;}
-/* WINDOWS */
-.window{position:absolute;min-width:260px;min-height:160px;background:rgba(30,30,30,.96);backdrop-filter:blur(10px);border-radius:12px;border:1px solid rgba(255,255,255,.25);display:none;flex-direction:column;box-shadow:0 18px 45px rgba(0,0,0,.55);resize:both;overflow:hidden;animation:winOpen .25s cubic-bezier(.2,.8,.2,1);z-index:1000;}
-@keyframes winOpen{0%{opacity:0;transform:scale(.92) translateY(6px);}100%{opacity:1;transform:scale(1) translateY(0);}}
-@keyframes winClose{0%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(.92);}}
-@keyframes winMin{0%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(.8);}}
-.window.closing{animation:winClose .22s ease forwards;}
-.window.minimizing{animation:winMin .22s ease forwards;}
-.window-header{height:34px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:12px 12px 0 0;background:rgba(255,255,255,.06);cursor:grab;user-select:none;}
-.window-header-icon{width:18px;height:18px;border-radius:4px;object-fit:cover;}
-.window-title{flex:1;color:white;font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.window-buttons{display:flex;align-items:center;gap:4px;}
-.win-btn{width:26px;height:22px;border-radius:4px;border:none;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;background:transparent;color:white;transition:.15s;}
-.win-btn:hover{background:rgba(255,255,255,.12);}
-.win-btn.close:hover{background:#e81123;}
-.window-content{flex:1;padding:12px;color:white;font-size:14px;overflow:auto;}
-#settings-window{top:120px;left:120px;width:360px;height:230px;}
-#settings-content select{width:100%;padding:8px;border-radius:8px;border:none;outline:none;font-family:"Lexend";}
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>SolarisGG Network</title><link rel="icon" type="image/png" href="SolarisGG-Logo.png"><link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;background:#000}
+#loading-screen{position:absolute;inset:0;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:20;animation:fadeOut 1s ease forwards;animation-delay:3.5s}
+#loading-logo{width:200px;height:200px;animation:logoAnim 3s ease}
+#loading-bar{width:300px;height:18px;border-radius:10px;background:rgba(255,255,255,.2);margin-top:25px;overflow:hidden}
+#loading-progress{width:0;height:100%;background:linear-gradient(90deg,#00aaff,#00ffea);animation:loadAnim 3s ease forwards}
+@keyframes logoAnim{0%{opacity:0;transform:scale(.6)}50%{opacity:1;transform:scale(1)}100%{opacity:1;transform:scale(1.05)}}
+@keyframes loadAnim{0%{width:0}100%{width:100%}}
+@keyframes fadeOut{0%{opacity:1}100%{opacity:0;visibility:hidden}}
+#login-screen{position:absolute;inset:0;background:url('SolarisGGFondo.png')center/cover no-repeat;backdrop-filter:blur(6px);display:flex;flex-direction:column;justify-content:center;align-items:center;transition:transform 1s ease;z-index:10}
+#login-screen img{width:180px;height:180px;border-radius:50%;margin-bottom:20px;box-shadow:0 8px 25px rgba(0,0,0,.4)}
+#login-screen h1{font-size:48px;color:#fff;text-shadow:0 3px 8px rgba(0,0,0,.6);margin-bottom:30px;font-weight:700}
+#login-btn{padding:14px 40px;font-size:22px;border:none;border-radius:12px;background:rgba(255,255,255,.85);cursor:pointer;transition:.25s;font-weight:600;font-family:"Lexend"!important}
+#login-btn:hover{background:#fff;transform:scale(1.05)}
+#desktop{position:absolute;inset:0;background:url('SolarisGGFondo.png')center/cover no-repeat;z-index:1}
+.icons{position:absolute;top:40px;left:40px;display:flex;flex-direction:column;gap:35px}
+.icon{width:90px;text-align:center;cursor:pointer}
+.icon img{width:64px;height:64px;margin-bottom:6px;transition:.2s;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+.icon:hover img{transform:scale(1.12)}
+.icon span{font-size:14px;color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.7)}
+.taskbar{position:absolute;left:0;right:0;bottom:0;height:68px;background:rgba(30,30,30,.85);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.25);display:flex;align-items:center;z-index:9999}
+#search-btn{position:absolute;left:15px;width:34px;height:34px;cursor:pointer;transition:.2s}
+#search-btn:hover{transform:scale(1.15)}
+#taskbar-apps{position:absolute;left:70px;display:flex;align-items:center;gap:18px;height:100%}
+.taskbar-app-icon-wrapper{position:relative;width:32px;height:32px;display:flex;justify-content:center;align-items:center}
+.taskbar-app-icon{width:32px;height:32px;border-radius:6px;cursor:pointer;opacity:.8;transition:.2s}
+.taskbar-app-icon.active{opacity:1;transform:scale(1.05)}
+.taskbar-app-icon:hover{opacity:1;transform:scale(1.1)}
+.taskbar-indicator{position:absolute;bottom:-6px;width:14px;height:3px;background:#fff;border-radius:10px;opacity:0;transition:.25s ease}
+.taskbar-right{position:absolute;right:15px;display:flex;align-items:center;gap:16px;color:#fff;font-size:14px}
+.taskbar-datetime{font-size:15px;font-weight:600;cursor:pointer}
+.taskbar-title{display:flex;align-items:center;gap:6px;font-size:18px;font-weight:700}
+.taskbar-title img{width:22px;height:22px;border-radius:6px}
+#date-tooltip{position:absolute;right:95px;bottom:72px;background:rgba(20,20,20,.95);color:#fff;padding:6px 10px;border-radius:8px;font-size:12px;font-family:"Lexend";box-shadow:0 8px 20px rgba(0,0,0,.6);display:none;z-index:10000}
+#search-menu{position:absolute;bottom:80px;left:10px;width:320px;height:470px;overflow-y:auto;background:rgba(30,30,30,.9);backdrop-filter:blur(10px);border-radius:12px;padding:16px;display:none;flex-direction:column;z-index:9998;opacity:0;transform:translateY(20px);transition:.22s ease}
+#search-menu.open{display:flex;opacity:1;transform:translateY(0)}
+#search-menu.closing{opacity:0;transform:translateY(20px)}
+#search-input{width:100%;padding:10px;border-radius:8px;border:none;outline:none;font-size:15px;margin-bottom:16px;font-family:"Lexend";background:#fff}
+.search-section{color:#fff;font-size:18px;font-weight:600;margin:10px 0 8px 2px;font-family:"Lexend"}
+.search-item{padding:12px;background:rgba(255,255,255,.1);margin-bottom:10px;border-radius:8px;color:#fff;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:12px;font-family:"Lexend"}
+.search-item:hover{background:rgba(255,255,255,.2)}
+.search-icon{width:32px;height:32px;border-radius:6px;object-fit:cover}
+#no-results{display:none;color:#fff;opacity:.8;margin-top:10px;font-size:16px;text-align:center;font-family:"Lexend"}
+#settings-btn-inside{position:absolute;right:15px;bottom:15px;width:32px;height:32px;cursor:pointer;opacity:.85;transition:.2s}
+#settings-btn-inside:hover{transform:scale(1.15);opacity:1}
+.window{position:absolute;min-width:260px;min-height:160px;background:rgba(30,30,30,.96);backdrop-filter:blur(10px);border-radius:12px;border:1px solid rgba(255,255,255,.25);display:none;flex-direction:column;box-shadow:0 18px 45px rgba(0,0,0,.55);resize:both;overflow:hidden;animation:winOpen .25s cubic-bezier(.2,.8,.2,1);z-index:1000}
+@keyframes winOpen{0%{opacity:0;transform:scale(.92) translateY(6px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes winClose{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.92)}}
+@keyframes winMin{0%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.8)}}
+.window.closing{animation:winClose .22s ease forwards}
+.window.minimizing{animation:winMin .22s ease forwards}
+.window-header{height:34px;display:flex;align-items:center;gap:8px;padding:0 10px;background:rgba(255,255,255,.06);cursor:grab;user-select:none}
+.window-header-icon{width:18px;height:18px;border-radius:4px;object-fit:cover}
+.window-title{flex:1;color:#fff;font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.window-buttons{display:flex;gap:4px}
+.win-btn{width:26px;height:22px;border:none;background:transparent;color:#fff;border-radius:4px;cursor:pointer;transition:.15s}
+.win-btn:hover{background:rgba(255,255,255,.12)}
+.win-btn.close:hover{background:#e81123}
+.window-content{flex:1;padding:12px;color:#fff;font-size:14px;overflow:auto}
+#settings-window{top:120px;left:120px;width:360px;height:230px}
+#zoyl-window{top:140px;left:220px;width:900px;height:600px}
 </style></head><body>
 <div id="loading-screen"><img id="loading-logo" src="SolarisGG-Logo.png"><div id="loading-bar"><div id="loading-progress"></div></div></div>
 <div id="login-screen"><img src="SolarisGG-Logo.png"><h1>SolarisGG</h1><button id="login-btn" onclick="login()">Iniciar sesión</button></div>
 <div id="desktop">
 <div class="icons">
+<div class="icon" onclick="openApp('zoyl')"><img src="ZOYLSolaris.png"><span>ZOYL</span></div>
 <div class="icon" onclick="location.href='ShootOut.html'"><img src="arma.png"><span>ShootOut</span></div>
 <div class="icon" onclick="location.href='GGCraft.html'"><img src="bloque.png"><span>GGCraft</span></div>
 </div>
 <div id="search-menu">
 <input id="search-input" onkeyup="filterGames()" placeholder="Buscar juegos...">
-<h3 class="search-section">Nuestros Juegos</h3>
+<h3 class="search-section" id="sec-our">Nuestros Juegos</h3>
 <div id="our-games">
-<div class="search-item" onclick="location.href='GGCraft.html'"><img src="bloque.png" class="search-icon"><span>GGCraft</span></div>
-<div class="search-item" onclick="location.href='ShootOut.html'"><img src="arma.png" class="search-icon"><span>ShootOut</span></div>
+<div class="search-item" data-cat="our" onclick="openApp('zoyl')"><img src="ZOYLSolaris.png" class="search-icon"><span>ZOYL</span></div>
+<div class="search-item" data-cat="our" onclick="location.href='GGCraft.html'"><img src="bloque.png" class="search-icon"><span>GGCraft</span></div>
+<div class="search-item" data-cat="our" onclick="location.href='ShootOut.html'"><img src="arma.png" class="search-icon"><span>ShootOut</span></div>
 </div>
-<h3 class="search-section">Otros Juegos</h3>
+<h3 class="search-section" id="sec-other">Otros Juegos</h3>
 <div id="other-games">
-<div class="search-item" onclick="location.href='https://adsf1234-hacker.github.io/EaglercraftClients/eag1_9_4.html'"><img src="mesa.png" class="search-icon"><span>Eaglercraft</span></div>
+<div class="search-item" data-cat="other" onclick="location.href='https://adsf1234-hacker.github.io/EaglercraftClients/eag1_9_4.html'"><img src="mesa.png" class="search-icon"><span>Eaglercraft</span></div>
 </div>
 <p id="no-results">Su juego no está disponible.</p>
 <img id="settings-btn-inside" src="ajustes.png" onclick="openApp('settings')">
 </div>
 <div class="taskbar">
-<img id="search-btn" src="lupa.png" onclick="toggleSearch()">
+<img id="search-btn" src="lupa.png">
 <div id="taskbar-apps"></div>
-<div class="taskbar-datetime"><span id="taskbar-date">00/00/00</span><span class="separator">|</span><span id="taskbar-time">00:00</span><span class="separator">|</span></div>
-<div class="taskbar-title"><img src="SolarisGG-Logo.png">SolarisGG</div>
+<div class="taskbar-right">
+<span class="taskbar-datetime" id="taskbar-short">--/--/-- | --:--</span>
+<div class="taskbar-title"><img src="SolarisGG-Logo.png"><span>SolarisGG</span></div>
 </div>
+</div>
+<div id="date-tooltip"></div>
 <div id="settings-window" class="window">
-<div class="window-header">
-<img class="window-header-icon" src="ajustes.png">
-<div class="window-title">Ajustes</div>
-<div class="window-buttons">
-<button class="win-btn" onclick="minimizeApp('settings')">–</button>
-<button class="win-btn" onclick="maximizeApp('settings')">□</button>
-<button class="win-btn close" onclick="closeApp('settings')">X</button>
+<div class="window-header"><img class="window-header-icon" src="ajustes.png"><div class="window-title">Ajustes</div><div class="window-buttons"><button class="win-btn" onclick="minimizeApp('settings')">–</button><button class="win-btn" onclick="maximizeApp('settings')">□</button><button class="win-btn close" onclick="closeApp('settings')">X</button></div></div>
+<div class="window-content"><p>Seleccionar idioma:</p><select style="width:100%;padding:8px;border-radius:8px;border:none;outline:none;font-family:'Lexend'"><option>Español</option><option>Inglés</option><option>Francés</option></select></div>
 </div>
-</div>
-<div class="window-content" id="settings-content">
-Seleccionar idioma:<br><br>
-<select><option>Español</option><option>Inglés</option><option>Francés</option></select>
-</div>
+<div id="zoyl-window" class="window">
+<div class="window-header"><img class="window-header-icon" src="ZOYLSolaris.png"><div class="window-title">ZOYL</div><div class="window-buttons"><button class="win-btn" onclick="minimizeApp('zoyl')">–</button><button class="win-btn" onclick="maximizeApp('zoyl')">□</button><button class="win-btn close" onclick="closeApp('zoyl')">X</button></div></div>
+<div class="window-content"><iframe src="https://turbowarp.org/805031560/embed" style="width:100%;height:100%;border:none;border-radius:8px"></iframe></div>
 </div>
 </div>
 <script>
-let zCounter=50;const windowsRegistry={};
+let z=50;const winReg={};
 function login(){document.getElementById("login-screen").style.transform="translateY(-100%)";}
-function openSearchMenu(){const m=document.getElementById("search-menu");m.style.display="flex";m.style.animation="menuOpen .25s ease forwards";}
-function closeSearchMenu(){const m=document.getElementById("search-menu");if(m.style.display==="flex"){m.style.animation="menuClose .25s ease forwards";setTimeout(()=>{m.style.display="none";},230);}}
-function toggleSearch(){const m=document.getElementById("search-menu");m.style.display==="flex"?closeSearchMenu():openSearchMenu();}
-function registerWindow(id,title,iconSrc,winId){
-const winEl=document.getElementById(winId);
-const taskbar=document.getElementById("taskbar-apps");
-const wrapper=document.createElement("div");
-wrapper.className="taskbar-app-icon-wrapper";
-wrapper.style.display="none";
-const appIcon=document.createElement("img");
-appIcon.className="taskbar-app-icon";
-appIcon.src=iconSrc;
-appIcon.dataset.appId=id;
-appIcon.onclick=()=>toggleFromTaskbar(id);
-const indicator=document.createElement("div");
-indicator.className="taskbar-indicator";
-wrapper.appendChild(appIcon);
-wrapper.appendChild(indicator);
-taskbar.appendChild(wrapper);
-windowsRegistry[id]={id,title,iconSrc,winEl,iconEl:appIcon,wrapper,indicator,isOpen:false,isMinimized:false,isMaximized:false,prev:{x:0,y:0,w:0,h:0}};
-winEl.dataset.appId=id;
-winEl.addEventListener("mousedown",()=>bringToFront(id));
-}
-function bringToFront(id){const w=windowsRegistry[id];if(!w)return;zCounter++;w.winEl.style.zIndex=zCounter;}
-function openApp(id){
-const w=windowsRegistry[id];if(!w)return;
-w.winEl.classList.remove("closing","minimizing");
-w.winEl.style.display="flex";
-w.wrapper.style.display="flex";
-w.indicator.style.opacity="1";
-w.isOpen=true;w.isMinimized=false;
-w.iconEl.classList.add("active");
-bringToFront(id);
-}
-function closeApp(id){
-const w=windowsRegistry[id];if(!w)return;
-w.winEl.classList.add("closing");
-setTimeout(()=>{
-w.winEl.style.display="none";
-w.wrapper.style.display="none";
-w.indicator.style.opacity="0";
-w.isOpen=false;w.isMinimized=false;w.isMaximized=false;
-w.iconEl.classList.remove("active");
-w.winEl.classList.remove("closing");
-},180);
-}
-function minimizeApp(id){
-const w=windowsRegistry[id];if(!w)return;
-w.winEl.classList.add("minimizing");
-setTimeout(()=>{
-w.winEl.style.display="none";
-w.isMinimized=true;
-w.indicator.style.opacity="0.35";
-w.iconEl.classList.remove("active");
-w.winEl.classList.remove("minimizing");
-},180);
-}
-function maximizeApp(id){
-const w=windowsRegistry[id];if(!w)return;
-const el=w.winEl;
-el.style.transition="all .25s cubic-bezier(.2,.8,.2,1)";
-if(!w.isMaximized){
-w.prev={x:el.offsetLeft,y:el.offsetTop,w:el.offsetWidth,h:el.offsetHeight};
-el.style.left="0px";el.style.top="0px";
-el.style.width=window.innerWidth+"px";
-el.style.height=(window.innerHeight-70)+"px";
-w.isMaximized=true;
-}else{
-el.style.left=w.prev.x+"px";
-el.style.top=w.prev.y+"px";
-el.style.width=w.prev.w+"px";
-el.style.height=w.prev.h+"px";
-w.isMaximized=false;
-}}
-function toggleFromTaskbar(id){
-const w=windowsRegistry[id];if(!w)return;
-if(!w.isOpen||w.isMinimized){openApp(id);}else{minimizeApp(id);}
-}
-let dragData=null;
-document.addEventListener("mousedown",e=>{
-const header=e.target.closest(".window-header");
-if(header){
-const win=header.parentElement;const id=win.dataset.appId;
-bringToFront(id);
-dragData={win,startX:e.clientX,startY:e.clientY,origX:win.offsetLeft,origY:win.offsetTop};
-document.body.style.userSelect="none";
-}});
-document.addEventListener("mousemove",e=>{
-if(dragData){
-dragData.win.style.left=dragData.origX+(e.clientX-dragData.startX)+"px";
-dragData.win.style.top=dragData.origY+(e.clientY-dragData.startY)+"px";
-}});
-document.addEventListener("mouseup",()=>{dragData=null;document.body.style.userSelect="";});
-function filterGames(){
-let i=document.getElementById("search-input").value.toLowerCase();
-let items=document.getElementsByClassName("search-item");let c=0;
-for(let x=0;x<items.length;x++){
-let t=items[x].innerText.toLowerCase();let v=t.includes(i);
-items[x].style.display=v?"flex":"none";if(v)c++;
-}
-updateCategoryVisibility();
-document.getElementById("no-results").style.display=c===0?"block":"none";
-}
-function updateCategoryVisibility(){
-const sections=[{title:document.querySelector("h3.search-section:nth-of-type(1)"),list:document.getElementById("our-games")},{title:document.querySelector("h3.search-section:nth-of-type(2)"),list:document.getElementById("other-games")}];
-sections.forEach(sec=>{const visible=Array.from(sec.list.children).filter(i=>i.style.display!=="none");sec.title.style.display=visible.length>0?"block":"none";});
-}
-document.addEventListener("click",e=>{
-const m=document.getElementById("search-menu"),b=document.getElementById("search-btn");
-if(m.style.display==="flex"&&!m.contains(e.target)&&e.target!==b)closeSearchMenu();
-});
-function updateDateTime(){
-const n=new Date();
-const d=String(n.getDate()).padStart(2,"0");
-const m=String(n.getMonth()+1).padStart(2,"0");
-const y=String(n.getFullYear()).slice(2);
-const h=String(n.getHours()).padStart(2,"0");
-const mi=String(n.getMinutes()).padStart(2,"0");
-const full=n.toLocaleDateString("es-ES",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
-const dateEl=document.getElementById("taskbar-date");
-const timeEl=document.getElementById("taskbar-time");
-const dtEl=document.querySelector(".taskbar-datetime");
-if(dateEl)dateEl.textContent=`${d}/${m}/${y}`;
-if(timeEl)timeEl.textContent=`${h}:${mi}`;
-if(dtEl)dtEl.setAttribute("data-full",full);
-}
+const searchBtn=document.getElementById("search-btn"),searchMenu=document.getElementById("search-menu");
+searchBtn.onclick=()=>toggleSearch();
+function toggleSearch(){if(searchMenu.classList.contains("open")){searchMenu.classList.add("closing");setTimeout(()=>{searchMenu.classList.remove("open","closing");searchMenu.style.display="none"},200)}else{searchMenu.style.display="flex";requestAnimationFrame(()=>searchMenu.classList.add("open"));}}
+document.addEventListener("click",e=>{if(searchMenu.style.display==="flex"&&!searchMenu.contains(e.target)&&e.target!==searchBtn)toggleSearch();});
+function registerWindow(id,icon,winId){const win=document.getElementById(winId),bar=document.getElementById("taskbar-apps");const wrap=document.createElement("div");wrap.className="taskbar-app-icon-wrapper";wrap.style.display="none";const ic=document.createElement("img");ic.src=icon;ic.className="taskbar-app-icon";ic.onclick=()=>toggleFromTaskbar(id);const ind=document.createElement("div");ind.className="taskbar-indicator";wrap.appendChild(ic);wrap.appendChild(ind);bar.appendChild(wrap);winReg[id]={win,icon:ic,wrap,ind,isOpen:false,isMin:false,isMax:false,prev:{x:0,y:0,w:0,h:0}};win.dataset.id=id;win.addEventListener("mousedown",()=>bring(id));}
+function bring(id){z++;winReg[id].win.style.zIndex=z;}
+function openApp(id){const w=winReg[id];w.win.classList.remove("closing","minimizing");w.win.style.display="flex";w.wrap.style.display="flex";w.ind.style.opacity="1";w.isOpen=true;w.isMin=false;w.icon.classList.add("active");bring(id);}
+function closeApp(id){const w=winReg[id];w.win.classList.add("closing");setTimeout(()=>{w.win.style.display="none";w.wrap.style.display="none";w.ind.style.opacity="0";w.isOpen=false;w.isMin=false;w.isMax=false;w.icon.classList.remove("active");w.win.classList.remove("closing");},180);}
+function minimizeApp(id){const w=winReg[id];w.win.classList.add("minimizing");setTimeout(()=>{w.win.style.display="none";w.isMin=true;w.ind.style.opacity=.35;w.icon.classList.remove("active");w.win.classList.remove("minimizing");},180);}
+function maximizeApp(id){const w=winReg[id],el=w.win;el.style.transition="all .25s cubic-bezier(.2,.8,.2,1)";if(!w.isMax){w.prev={x:el.offsetLeft,y:el.offsetTop,w:el.offsetWidth,h:el.offsetHeight};el.style.left="0px";el.style.top="0px";el.style.width=innerWidth+"px";el.style.height=(innerHeight-70)+"px";w.isMax=true;}else{el.style.left=w.prev.x+"px";el.style.top=w.prev.y+"px";el.style.width=w.prev.w+"px";el.style.height=w.prev.h+"px";w.isMax=false;}}
+function toggleFromTaskbar(id){const w=winReg[id];(!w.isOpen||w.isMin)?openApp(id):minimizeApp(id);}
+let drag=null;document.addEventListener("mousedown",e=>{const h=e.target.closest(".window-header");if(h){const win=h.parentElement,id=win.dataset.id;bring(id);drag={win,startX:e.clientX,startY:e.clientY,x:win.offsetLeft,y:win.offsetTop};document.body.style.userSelect="none";}});document.addEventListener("mousemove",e=>{if(drag){drag.win.style.left=drag.x+(e.clientX-drag.startX)+"px";drag.win.style.top=drag.y+(e.clientY-drag.startY)+"px";}});document.addEventListener("mouseup",()=>{drag=null;document.body.style.userSelect="";});
+function filterGames(){const q=document.getElementById("search-input").value.toLowerCase();const items=document.getElementsByClassName("search-item");let count=0,ourCount=0,otherCount=0;for(let i=0;i<items.length;i++){const t=items[i].innerText.toLowerCase();const show=t.includes(q);items[i].style.display=show?"flex":"none";if(show){count++;if(items[i].dataset.cat==="our")ourCount++;else if(items[i].dataset.cat==="other")otherCount++;}}document.getElementById("no-results").style.display=count===0?"block":"none";document.getElementById("sec-our").style.display=ourCount>0?"block":"none";document.getElementById("our-games").style.display=ourCount>0?"block":"none";document.getElementById("sec-other").style.display=otherCount>0?"block":"none";document.getElementById("other-games").style.display=otherCount>0?"block":"none";}
+function updateDateTime(){const n=new Date(),d=String(n.getDate()).padStart(2,"0"),mo=String(n.getMonth()+1).padStart(2,"0"),y=String(n.getFullYear()).slice(2),h=String(n.getHours()).padStart(2,"0"),mi=String(n.getMinutes()).padStart(2,"0");const short=`${d}/${mo}/${y} | ${h}:${mi}`;document.getElementById("taskbar-short").textContent=short;const days=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"],months=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];const detailed=`${days[n.getDay()]}, ${n.getDate()} de ${months[n.getMonth()]} de ${n.getFullYear()} — ${h}:${mi}`;document.getElementById("date-tooltip").textContent=detailed;}
 setInterval(updateDateTime,1000);updateDateTime();
-function sortSection(id){
-const s=document.getElementById(id);if(!s)return;
-const items=Array.from(s.children);
-items.sort((a,b)=>a.innerText.toLowerCase().localeCompare(b.innerText.toLowerCase()));
-items.forEach(i=>s.appendChild(i));
-}
-window.onload=()=>{sortSection("our-games");sortSection("other-games");registerWindow("settings","Ajustes","ajustes.png","settings-window");};
+const dtHover=document.getElementById("taskbar-short"),tooltip=document.getElementById("date-tooltip");dtHover.addEventListener("mouseenter",()=>{tooltip.style.display="block";});dtHover.addEventListener("mouseleave",()=>{tooltip.style.display="none";});
+window.onload=()=>{registerWindow("settings","ajustes.png","settings-window");registerWindow("zoyl","ZOYLSolaris.png","zoyl-window");};
 </script>
 </body></html>
