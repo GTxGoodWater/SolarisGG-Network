@@ -206,17 +206,19 @@
     bottom: 90px;
     left: 10px;
 
-    width: 300px;
+    width: 320px;
     max-width: calc(100% - 20px);
-    box-sizing: border-box;
+    height: 440px;
 
-    max-height: 440px;
+    box-sizing: border-box;
     overflow-y: auto;
+    overflow-x: hidden;
 
     background: rgba(30,30,30,0.85);
     backdrop-filter: blur(10px);
     border-radius: 12px;
-    padding: 14px;
+    padding: 16px;
+
     display: none;
     flex-direction: column;
   }
@@ -242,13 +244,13 @@
 
   #search-input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border-radius: 8px;
     border: none;
     outline: none;
     font-size: 15px;
     font-family: "Lexend", sans-serif;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     box-sizing: border-box;
   }
 
@@ -311,18 +313,27 @@
     opacity: 0.6;
   }
 
+  /* Tooltip animado + más bajo */
   .taskbar-datetime:hover::after {
     content: attr(data-full);
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 75px;
+    bottom: 50px; /* 🔥 más bajo aún */
     background: rgba(40,40,40,0.95);
     padding: 8px 14px;
     border-radius: 6px;
     font-size: 14px;
     white-space: nowrap;
     color: white;
+
+    opacity: 0;
+    animation: tooltipFade 0.25s ease forwards;
+  }
+
+  @keyframes tooltipFade {
+    0% { opacity: 0; transform: translate(-50%, 10px); }
+    100% { opacity: 1; transform: translate(-50%, 0); }
   }
 
   /* ===========================
@@ -473,7 +484,7 @@
 <div id="login-screen">
   <img src="SolarisGG-Logo.png">
   <h1>SolarisGG</h1>
-  <button id="login-btn" onclick="login()">Login</button>
+  <button id="login-btn" onclick="login()">Iniciar sesión</button>
 </div>
 
 <div id="desktop">
