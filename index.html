@@ -115,6 +115,7 @@
     cursor: pointer;
     transition: 0.25s;
     font-weight: 600;
+    font-family: "Lexend", sans-serif;
   }
 
   #login-btn:hover {
@@ -170,24 +171,18 @@
   }
 
   /* ===========================
-     BARRA DE TAREAS (ALTURA -10%)
+     BARRA DE TAREAS
      =========================== */
   .taskbar {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 68px; /* antes 76px */
+    height: 68px;
     background: rgba(30,30,30,0.85);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255,255,255,0.25);
     display: flex;
     align-items: center;
-    animation: taskbarAnim 1.2s ease;
-  }
-
-  @keyframes taskbarAnim {
-    0% { transform: translateY(100%); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
   }
 
   #search-btn {
@@ -210,16 +205,29 @@
     position: absolute;
     bottom: 90px;
     left: 10px;
-    width: 320px;
+
+    width: 300px;
     max-width: calc(100% - 20px);
-    height: 440px;
+    box-sizing: border-box;
+
+    max-height: 440px;
+    overflow-y: auto;
+
     background: rgba(30,30,30,0.85);
     backdrop-filter: blur(10px);
     border-radius: 12px;
-    padding: 16px;
+    padding: 14px;
     display: none;
     flex-direction: column;
-    animation: menuOpen 0.25s ease;
+  }
+
+  #search-menu::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #search-menu::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.25);
+    border-radius: 10px;
   }
 
   @keyframes menuOpen {
@@ -234,14 +242,22 @@
 
   #search-input {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     border-radius: 8px;
     border: none;
     outline: none;
     font-size: 15px;
     font-family: "Lexend", sans-serif;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     box-sizing: border-box;
+  }
+
+  .search-section {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 10px 0 8px 2px;
+    opacity: 0.9;
   }
 
   .search-item {
@@ -268,18 +284,26 @@
     object-fit: cover;
   }
 
+  #no-results {
+    display: none;
+    color: white;
+    opacity: 0.8;
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+  }
+
   /* ===========================
-     FECHA + HORA + SEPARADORES
+     FECHA + HORA
      =========================== */
   .taskbar-datetime {
     position: absolute;
-    right: 200px; /* MÁS CERCA DEL LOGO */
+    right: 200px;
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 17px;
     color: white;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
     font-weight: 600;
   }
 
@@ -290,15 +314,15 @@
   .taskbar-datetime:hover::after {
     content: attr(data-full);
     position: absolute;
-    bottom: 80px;
-    right: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 75px;
     background: rgba(40,40,40,0.95);
     padding: 8px 14px;
     border-radius: 6px;
     font-size: 14px;
     white-space: nowrap;
     color: white;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
   }
 
   /* ===========================
@@ -312,7 +336,6 @@
     gap: 8px;
     font-size: 22px;
     color: white;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.6);
     font-weight: 700;
   }
 
@@ -320,13 +343,6 @@
     width: 30px;
     height: 30px;
     border-radius: 6px;
-    animation: logoPulse 2s infinite ease-in-out;
-  }
-
-  @keyframes logoPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.12); }
-    100% { transform: scale(1); }
   }
 </style>
 
@@ -335,26 +351,59 @@
     document.getElementById("login-screen").style.transform = "translateY(-100%)";
   }
 
-  function toggleSearch() {
+  function openSearchMenu() {
     const menu = document.getElementById("search-menu");
+    menu.style.display = "flex";
+    menu.style.animation = "menuOpen 0.25s ease forwards";
+  }
 
+  function closeSearchMenu() {
+    const menu = document.getElementById("search-menu");
     if (menu.style.display === "flex") {
       menu.style.animation = "menuClose 0.25s ease forwards";
-      setTimeout(() => menu.style.display = "none", 200);
+      setTimeout(() => {
+        menu.style.display = "none";
+      }, 230);
+    }
+  }
+
+  function toggleSearch() {
+    const menu = document.getElementById("search-menu");
+    if (menu.style.display === "flex") {
+      closeSearchMenu();
     } else {
-      menu.style.display = "flex";
-      menu.style.animation = "menuOpen 0.25s ease forwards";
+      openSearchMenu();
     }
   }
 
   function filterGames() {
     let input = document.getElementById("search-input").value.toLowerCase();
     let items = document.getElementsByClassName("search-item");
+    let visibleCount = 0;
 
     for (let i = 0; i < items.length; i++) {
       let text = items[i].innerText.toLowerCase();
-      items[i].style.display = text.includes(input) ? "flex" : "none";
+      const visible = text.includes(input);
+      items[i].style.display = visible ? "flex" : "none";
+      if (visible) visibleCount++;
     }
+
+    updateCategoryVisibility();
+
+    document.getElementById("no-results").style.display =
+      visibleCount === 0 ? "block" : "none";
+  }
+
+  function updateCategoryVisibility() {
+    const sections = [
+      { title: document.querySelector("h3.search-section:nth-of-type(1)"), list: document.getElementById("our-games") },
+      { title: document.querySelector("h3.search-section:nth-of-type(2)"), list: document.getElementById("other-games") }
+    ];
+
+    sections.forEach(sec => {
+      const visibleItems = Array.from(sec.list.children).filter(item => item.style.display !== "none");
+      sec.title.style.display = visibleItems.length > 0 ? "block" : "none";
+    });
   }
 
   document.addEventListener("click", function(e) {
@@ -362,10 +411,7 @@
     const btn = document.getElementById("search-btn");
 
     if (!menu.contains(e.target) && e.target !== btn) {
-      if (menu.style.display === "flex") {
-        menu.style.animation = "menuClose 0.25s ease forwards";
-        setTimeout(() => menu.style.display = "none", 200);
-      }
+      closeSearchMenu();
     }
   });
 
@@ -394,6 +440,24 @@
 
   setInterval(updateDateTime, 1000);
   updateDateTime();
+
+  function sortSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    const items = Array.from(section.children);
+
+    items.sort((a, b) => {
+      const nameA = a.innerText.toLowerCase();
+      const nameB = b.innerText.toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+
+    items.forEach(item => section.appendChild(item));
+  }
+
+  window.onload = () => {
+    sortSection("our-games");
+    sortSection("other-games");
+  };
 </script>
 
 </head>
@@ -427,17 +491,36 @@
   </div>
 
   <div id="search-menu">
+
     <input id="search-input" onkeyup="filterGames()" placeholder="Buscar juegos...">
 
-    <div class="search-item" onclick="location.href='ShootOut.html'">
-      <img src="arma.png" class="search-icon">
-      <span>ShootOut</span>
+    <h3 class="search-section">Nuestros Juegos</h3>
+    <div id="our-games">
+
+      <div class="search-item" onclick="location.href='GGCraft.html'">
+        <img src="bloque.png" class="search-icon">
+        <span>GGCraft</span>
+      </div>
+
+      <div class="search-item" onclick="location.href='ShootOut.html'">
+        <img src="arma.png" class="search-icon">
+        <span>ShootOut</span>
+      </div>
+
     </div>
 
-    <div class="search-item" onclick="location.href='GGCraft.html'">
-      <img src="bloque.png" class="search-icon">
-      <span>GGCraft</span>
+    <h3 class="search-section">Otros Juegos</h3>
+    <div id="other-games">
+
+      <div class="search-item" onclick="location.href='https://adsf1234-hacker.github.io/EaglercraftClients/eag1_9_4.html'">
+        <img src="mesa.png" class="search-icon">
+        <span>Eaglercraft</span>
+      </div>
+
     </div>
+
+    <p id="no-results">Su juego no está disponible.</p>
+
   </div>
 
   <div class="taskbar">
@@ -455,6 +538,7 @@
       <img src="SolarisGG-Logo.png">
       SolarisGG
     </div>
+
   </div>
 
 </div>
