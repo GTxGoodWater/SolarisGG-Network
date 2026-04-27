@@ -1,5 +1,6 @@
 <!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>SolarisGG Network</title><link rel="icon" type="image/png" href="SolarisGG-Logo.png?v=9999"><link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet"><style>
 body{margin:0;padding:0;height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;}
+/* LOADING */
 #loading-screen{position:absolute;width:100%;height:100%;background:black;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:20;animation:fadeOut 1s ease forwards;animation-delay:3.5s;}
 #loading-logo{width:200px;height:200px;animation:logoAnim 3s ease;}
 @keyframes logoAnim{0%{opacity:0;transform:scale(.6);}50%{opacity:1;transform:scale(1);}100%{opacity:1;transform:scale(1.05);}}
@@ -7,45 +8,56 @@ body{margin:0;padding:0;height:100vh;overflow:hidden;font-family:"Lexend",sans-s
 #loading-progress{width:0;height:100%;background:linear-gradient(90deg,#00aaff,#00ffea);animation:loadAnim 3s ease forwards;}
 @keyframes loadAnim{0%{width:0;}100%{width:100%;}}
 @keyframes fadeOut{0%{opacity:1;}100%{opacity:0;visibility:hidden;}}
+/* LOGIN */
 #login-screen{position:absolute;width:100%;height:100%;background:url('SolarisGGFondo.png');background-size:cover;background-position:center;backdrop-filter:blur(6px);display:flex;flex-direction:column;justify-content:center;align-items:center;transition:transform 1s ease;z-index:10;}
 #login-screen img{width:180px;height:180px;border-radius:50%;margin-bottom:20px;box-shadow:0 8px 25px rgba(0,0,0,.4);}
 #login-screen h1{font-size:48px;color:white;text-shadow:0 3px 8px rgba(0,0,0,.6);margin-bottom:30px;font-weight:700;}
-#login-btn{padding:14px 40px;font-size:22px;border:none;border-radius:12px;background:rgba(255,255,255,.85);cursor:pointer;transition:.25s;font-weight:600;font-family:"Lexend";}
+#login-btn{padding:14px 40px;font-size:22px;border:none;border-radius:12px;background:rgba(255,255,255,.85);cursor:pointer;transition:.25s;font-weight:600;}
 #login-btn:hover{background:white;transform:scale(1.05);}
-#desktop{width:100%;height:100%;background:url('SolarisGGFondo.png');background-size:cover;background-position:center;position:absolute;top:0;left:0;}
+/* DESKTOP */
+#desktop{width:100%;height:100%;background:url('SolarisGGFondo.png');background-size:cover;background-position:center;position:absolute;top:0;left:0;z-index:1;}
 .icons{position:absolute;top:40px;left:40px;display:flex;flex-direction:column;gap:35px;}
 .icon{width:90px;text-align:center;cursor:pointer;}
 .icon img{width:64px;height:64px;margin-bottom:6px;transition:.2s;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));}
 .icon:hover img{transform:scale(1.12);}
 .icon span{font-size:14px;color:white;text-shadow:0 2px 4px rgba(0,0,0,.7);}
-.taskbar{position:absolute;bottom:0;width:100%;height:68px;background:rgba(30,30,30,.85);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.25);display:flex;align-items:center;}
+/* TASKBAR */
+.taskbar{position:absolute;bottom:0;width:100%;height:68px;background:rgba(30,30,30,.85);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,.25);display:flex;align-items:center;z-index:999999;}
 #search-btn{position:absolute;left:15px;cursor:pointer;width:34px;height:34px;transition:.2s;}
 #search-btn:hover{transform:scale(1.15);}
-#taskbar-apps{position:absolute;left:70px;display:flex;align-items:center;gap:8px;height:100%;}
+#taskbar-apps{position:absolute;left:70px;display:flex;align-items:center;gap:18px;height:100%;}
+.taskbar-app-icon-wrapper{position:relative;width:32px;height:32px;display:flex;justify-content:center;align-items:center;}
 .taskbar-app-icon{width:32px;height:32px;border-radius:6px;cursor:pointer;opacity:.8;transition:.2s;}
 .taskbar-app-icon.active{opacity:1;transform:scale(1.05);}
 .taskbar-app-icon:hover{opacity:1;transform:scale(1.1);}
-#search-menu{position:absolute;bottom:90px;left:10px;width:320px;max-width:calc(100% - 20px);height:440px;box-sizing:border-box;overflow-y:auto;overflow-x:hidden;background:rgba(30,30,30,.85);backdrop-filter:blur(10px);border-radius:12px;padding:16px;display:none;flex-direction:column;}
+.taskbar-indicator{position:absolute;bottom:-6px;width:14px;height:3px;background:white;border-radius:10px;opacity:0;transition:.25s ease;}
+.taskbar-datetime{position:absolute;right:200px;display:flex;align-items:center;gap:8px;font-size:17px;color:white;font-weight:600;}
+.separator{opacity:.6;}
+.taskbar-datetime:hover::after{content:attr(data-full);position:absolute;left:50%;transform:translateX(-50%);bottom:50px;background:rgba(40,40,40,.95);padding:8px 14px;border-radius:6px;font-size:14px;white-space:nowrap;color:white;opacity:0;animation:tooltipFade .25s ease forwards;}
+@keyframes tooltipFade{0%{opacity:0;transform:translate(-50%,10px);}100%{opacity:1;transform:translate(-50%,0);}}
+.taskbar-title{position:absolute;right:25px;display:flex;align-items:center;gap:8px;font-size:22px;color:white;font-weight:700;}
+.taskbar-title img{width:30px;height:30px;border-radius:6px;}
+/* SEARCH MENU */
+#search-menu{position:absolute;bottom:90px;left:10px;width:320px;max-width:calc(100% - 20px);height:440px;box-sizing:border-box;overflow-y:auto;overflow-x:hidden;background:rgba(30,30,30,.85);backdrop-filter:blur(10px);border-radius:12px;padding:16px;display:none;flex-direction:column;z-index:999998;font-family:"Lexend";}
 #search-menu::-webkit-scrollbar{width:6px;}
 #search-menu::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:10px;}
 @keyframes menuOpen{0%{transform:translateY(20px);opacity:0;}100%{transform:translateY(0);opacity:1;}}
 @keyframes menuClose{0%{transform:translateY(0);opacity:1;}100%{transform:translateY(20px);opacity:0;}}
-#search-input{width:100%;padding:10px;border-radius:8px;border:none;outline:none;font-size:15px;margin-bottom:16px;box-sizing:border-box;}
-.search-section{color:white;font-size:18px;font-weight:600;margin:10px 0 8px 2px;opacity:.9;}
-.search-item{padding:12px;background:rgba(255,255,255,.1);margin-bottom:10px;border-radius:8px;color:white;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:12px;}
+#search-input{width:100%;padding:10px;border-radius:8px;border:none;outline:none;font-size:15px;margin-bottom:16px;box-sizing:border-box;font-family:"Lexend";}
+.search-section{color:white;font-size:18px;font-weight:600;margin:10px 0 8px 2px;opacity:.9;font-family:"Lexend";}
+.search-item{padding:12px;background:rgba(255,255,255,.1);margin-bottom:10px;border-radius:8px;color:white;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:12px;font-family:"Lexend";}
 .search-item:hover{background:rgba(255,255,255,.2);}
 .search-icon{width:32px;height:32px;border-radius:6px;object-fit:cover;}
-#no-results{display:none;color:white;opacity:.8;margin-top:10px;font-size:16px;text-align:center;}
+#no-results{display:none;color:white;opacity:.8;margin-top:10px;font-size:16px;text-align:center;font-family:"Lexend";}
 #settings-btn-inside{position:absolute;right:15px;bottom:15px;width:32px;height:32px;cursor:pointer;opacity:.85;transition:.2s;}
 #settings-btn-inside:hover{transform:scale(1.15);opacity:1;}
-.window{position:absolute;min-width:260px;min-height:160px;background:rgba(30,30,30,.96);backdrop-filter:blur(10px);border-radius:12px;border:1px solid rgba(255,255,255,.25);display:none;flex-direction:column;box-shadow:0 18px 45px rgba(0,0,0,.55);resize:both;overflow:hidden;animation:winOpen .25s cubic-bezier(.2,.8,.2,1);}
+/* WINDOWS */
+.window{position:absolute;min-width:260px;min-height:160px;background:rgba(30,30,30,.96);backdrop-filter:blur(10px);border-radius:12px;border:1px solid rgba(255,255,255,.25);display:none;flex-direction:column;box-shadow:0 18px 45px rgba(0,0,0,.55);resize:both;overflow:hidden;animation:winOpen .25s cubic-bezier(.2,.8,.2,1);z-index:1000;}
 @keyframes winOpen{0%{opacity:0;transform:scale(.92) translateY(6px);}100%{opacity:1;transform:scale(1) translateY(0);}}
 @keyframes winClose{0%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(.92);}}
 @keyframes winMin{0%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(.8);}}
-@keyframes winMax{0%{transform:scale(1);}100%{transform:scale(1.02);}}
 .window.closing{animation:winClose .22s ease forwards;}
 .window.minimizing{animation:winMin .22s ease forwards;}
-.window.maximizing{animation:winMax .18s ease;}
 .window-header{height:34px;display:flex;align-items:center;gap:8px;padding:0 10px;border-radius:12px 12px 0 0;background:rgba(255,255,255,.06);cursor:grab;user-select:none;}
 .window-header-icon{width:18px;height:18px;border-radius:4px;object-fit:cover;}
 .window-title{flex:1;color:white;font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -56,12 +68,6 @@ body{margin:0;padding:0;height:100vh;overflow:hidden;font-family:"Lexend",sans-s
 .window-content{flex:1;padding:12px;color:white;font-size:14px;overflow:auto;}
 #settings-window{top:120px;left:120px;width:360px;height:230px;}
 #settings-content select{width:100%;padding:8px;border-radius:8px;border:none;outline:none;font-family:"Lexend";}
-.taskbar-datetime{position:absolute;right:200px;display:flex;align-items:center;gap:8px;font-size:17px;color:white;font-weight:600;}
-.separator{opacity:.6;}
-.taskbar-datetime:hover::after{content:attr(data-full);position:absolute;left:50%;transform:translateX(-50%);bottom:50px;background:rgba(40,40,40,.95);padding:8px 14px;border-radius:6px;font-size:14px;white-space:nowrap;color:white;opacity:0;animation:tooltipFade .25s ease forwards;}
-@keyframes tooltipFade{0%{opacity:0;transform:translate(-50%,10px);}100%{opacity:1;transform:translate(-50%,0);}}
-.taskbar-title{position:absolute;right:25px;display:flex;align-items:center;gap:8px;font-size:22px;color:white;font-weight:700;}
-.taskbar-title img{width:30px;height:30px;border-radius:6px;}
 </style></head><body>
 <div id="loading-screen"><img id="loading-logo" src="SolarisGG-Logo.png"><div id="loading-bar"><div id="loading-progress"></div></div></div>
 <div id="login-screen"><img src="SolarisGG-Logo.png"><h1>SolarisGG</h1><button id="login-btn" onclick="login()">Iniciar sesión</button></div>
@@ -102,11 +108,7 @@ body{margin:0;padding:0;height:100vh;overflow:hidden;font-family:"Lexend",sans-s
 </div>
 <div class="window-content" id="settings-content">
 Seleccionar idioma:<br><br>
-<select>
-<option>Español</option>
-<option>Inglés</option>
-<option>Francés</option>
-</select>
+<select><option>Español</option><option>Inglés</option><option>Francés</option></select>
 </div>
 </div>
 </div>
@@ -116,23 +118,136 @@ function login(){document.getElementById("login-screen").style.transform="transl
 function openSearchMenu(){const m=document.getElementById("search-menu");m.style.display="flex";m.style.animation="menuOpen .25s ease forwards";}
 function closeSearchMenu(){const m=document.getElementById("search-menu");if(m.style.display==="flex"){m.style.animation="menuClose .25s ease forwards";setTimeout(()=>{m.style.display="none";},230);}}
 function toggleSearch(){const m=document.getElementById("search-menu");m.style.display==="flex"?closeSearchMenu():openSearchMenu();}
-function registerWindow(id,title,iconSrc,winId){const winEl=document.getElementById(winId);const taskbar=document.getElementById("taskbar-apps");const appIcon=document.createElement("img");appIcon.className="taskbar-app-icon";appIcon.src=iconSrc;appIcon.style.display="none";appIcon.dataset.appId=id;appIcon.onclick=()=>toggleFromTaskbar(id);taskbar.appendChild(appIcon);windowsRegistry[id]={id,title,iconSrc,winEl,iconEl:appIcon,isOpen:false,isMinimized:false,isMaximized:false,prev:{x:0,y:0,w:0,h:0}};winEl.dataset.appId=id;winEl.addEventListener("mousedown",()=>bringToFront(id));}
+function registerWindow(id,title,iconSrc,winId){
+const winEl=document.getElementById(winId);
+const taskbar=document.getElementById("taskbar-apps");
+const wrapper=document.createElement("div");
+wrapper.className="taskbar-app-icon-wrapper";
+wrapper.style.display="none";
+const appIcon=document.createElement("img");
+appIcon.className="taskbar-app-icon";
+appIcon.src=iconSrc;
+appIcon.dataset.appId=id;
+appIcon.onclick=()=>toggleFromTaskbar(id);
+const indicator=document.createElement("div");
+indicator.className="taskbar-indicator";
+wrapper.appendChild(appIcon);
+wrapper.appendChild(indicator);
+taskbar.appendChild(wrapper);
+windowsRegistry[id]={id,title,iconSrc,winEl,iconEl:appIcon,wrapper,indicator,isOpen:false,isMinimized:false,isMaximized:false,prev:{x:0,y:0,w:0,h:0}};
+winEl.dataset.appId=id;
+winEl.addEventListener("mousedown",()=>bringToFront(id));
+}
 function bringToFront(id){const w=windowsRegistry[id];if(!w)return;zCounter++;w.winEl.style.zIndex=zCounter;}
-function openApp(id){const w=windowsRegistry[id];if(!w)return;w.winEl.classList.remove("closing","minimizing");w.winEl.style.display="flex";w.iconEl.style.display="block";w.isOpen=true;w.isMinimized=false;w.iconEl.classList.add("active");bringToFront(id);}
-function closeApp(id){const w=windowsRegistry[id];if(!w)return;w.winEl.classList.add("closing");setTimeout(()=>{w.winEl.style.display="none";w.iconEl.style.display="none";w.isOpen=false;w.isMinimized=false;w.isMaximized=false;w.iconEl.classList.remove("active");w.winEl.classList.remove("closing");},180);}
-function minimizeApp(id){const w=windowsRegistry[id];if(!w)return;w.winEl.classList.add("minimizing");setTimeout(()=>{w.winEl.style.display="none";w.isMinimized=true;w.iconEl.classList.remove("active");w.winEl.classList.remove("minimizing");},180);}
-function maximizeApp(id){const w=windowsRegistry[id];if(!w)return;const el=w.winEl;el.classList.add("maximizing");setTimeout(()=>{el.classList.remove("maximizing");},180);if(!w.isMaximized){w.prev={x:el.offsetLeft,y:el.offsetTop,w:el.offsetWidth,h:el.offsetHeight};el.style.left="0px";el.style.top="0px";el.style.width=window.innerWidth+"px";el.style.height=(window.innerHeight-70)+"px";w.isMaximized=true;}else{el.style.left=w.prev.x+"px";el.style.top=w.prev.y+"px";el.style.width=w.prev.w+"px";el.style.height=w.prev.h+"px";w.isMaximized=false;}}
-function toggleFromTaskbar(id){const w=windowsRegistry[id];if(!w)return;if(!w.isOpen||w.isMinimized){openApp(id);}else{minimizeApp(id);}}
+function openApp(id){
+const w=windowsRegistry[id];if(!w)return;
+w.winEl.classList.remove("closing","minimizing");
+w.winEl.style.display="flex";
+w.wrapper.style.display="flex";
+w.indicator.style.opacity="1";
+w.isOpen=true;w.isMinimized=false;
+w.iconEl.classList.add("active");
+bringToFront(id);
+}
+function closeApp(id){
+const w=windowsRegistry[id];if(!w)return;
+w.winEl.classList.add("closing");
+setTimeout(()=>{
+w.winEl.style.display="none";
+w.wrapper.style.display="none";
+w.indicator.style.opacity="0";
+w.isOpen=false;w.isMinimized=false;w.isMaximized=false;
+w.iconEl.classList.remove("active");
+w.winEl.classList.remove("closing");
+},180);
+}
+function minimizeApp(id){
+const w=windowsRegistry[id];if(!w)return;
+w.winEl.classList.add("minimizing");
+setTimeout(()=>{
+w.winEl.style.display="none";
+w.isMinimized=true;
+w.indicator.style.opacity="0.35";
+w.iconEl.classList.remove("active");
+w.winEl.classList.remove("minimizing");
+},180);
+}
+function maximizeApp(id){
+const w=windowsRegistry[id];if(!w)return;
+const el=w.winEl;
+el.style.transition="all .25s cubic-bezier(.2,.8,.2,1)";
+if(!w.isMaximized){
+w.prev={x:el.offsetLeft,y:el.offsetTop,w:el.offsetWidth,h:el.offsetHeight};
+el.style.left="0px";el.style.top="0px";
+el.style.width=window.innerWidth+"px";
+el.style.height=(window.innerHeight-70)+"px";
+w.isMaximized=true;
+}else{
+el.style.left=w.prev.x+"px";
+el.style.top=w.prev.y+"px";
+el.style.width=w.prev.w+"px";
+el.style.height=w.prev.h+"px";
+w.isMaximized=false;
+}}
+function toggleFromTaskbar(id){
+const w=windowsRegistry[id];if(!w)return;
+if(!w.isOpen||w.isMinimized){openApp(id);}else{minimizeApp(id);}
+}
 let dragData=null;
-document.addEventListener("mousedown",e=>{const header=e.target.closest(".window-header");if(header){const win=header.parentElement;const id=win.dataset.appId;bringToFront(id);dragData={win,startX:e.clientX,startY:e.clientY,origX:win.offsetLeft,origY:win.offsetTop};document.body.style.userSelect="none";}});
-document.addEventListener("mousemove",e=>{if(dragData){dragData.win.style.left=dragData.origX+(e.clientX-dragData.startX)+"px";dragData.win.style.top=dragData.origY+(e.clientY-dragData.startY)+"px";}});
+document.addEventListener("mousedown",e=>{
+const header=e.target.closest(".window-header");
+if(header){
+const win=header.parentElement;const id=win.dataset.appId;
+bringToFront(id);
+dragData={win,startX:e.clientX,startY:e.clientY,origX:win.offsetLeft,origY:win.offsetTop};
+document.body.style.userSelect="none";
+}});
+document.addEventListener("mousemove",e=>{
+if(dragData){
+dragData.win.style.left=dragData.origX+(e.clientX-dragData.startX)+"px";
+dragData.win.style.top=dragData.origY+(e.clientY-dragData.startY)+"px";
+}});
 document.addEventListener("mouseup",()=>{dragData=null;document.body.style.userSelect="";});
-function filterGames(){let i=document.getElementById("search-input").value.toLowerCase();let items=document.getElementsByClassName("search-item");let c=0;for(let x=0;x<items.length;x++){let t=items[x].innerText.toLowerCase();let v=t.includes(i);items[x].style.display=v?"flex":"none";if(v)c++;}updateCategoryVisibility();document.getElementById("no-results").style.display=c===0?"block":"none";}
-function updateCategoryVisibility(){const s=[{title:document.querySelector("h3.search-section:nth-of-type(1)"),list:document.getElementById("our-games")},{title:document.querySelector("h3.search-section:nth-of-type(2)"),list:document.getElementById("other-games")}];s.forEach(sec=>{const v=Array.from(sec.list.children).filter(i=>i.style.display!=="none");sec.title.style.display=v.length>0?"block":"none";});}
-document.addEventListener("click",e=>{const m=document.getElementById("search-menu"),b=document.getElementById("search-btn");if(m.style.display==="flex"&&!m.contains(e.target)&&e.target!==b)closeSearchMenu();});
-function updateDateTime(){const n=new Date();const d=String(n.getDate()).padStart(2,"0");const m=String(n.getMonth()+1).padStart(2,"0");const y=String(n.getFullYear()).slice(2);const h=String(n.getHours()).padStart(2,"0");const mi=String(n.getMinutes()).padStart(2,"0");const f=n.toLocaleDateString("es-ES",{weekday:"long",year:"numeric",month:"long",day:"numeric"});const dateEl=document.getElementById("taskbar-date");const timeEl=document.getElementById("taskbar-time");const dtEl=document.querySelector(".taskbar-datetime");if(dateEl)dateEl.textContent=`${d}/${m}/${y}`;if(timeEl)timeEl.textContent=`${h}:${mi}`;if(dtEl)dtEl.setAttribute("data-full",f);}
+function filterGames(){
+let i=document.getElementById("search-input").value.toLowerCase();
+let items=document.getElementsByClassName("search-item");let c=0;
+for(let x=0;x<items.length;x++){
+let t=items[x].innerText.toLowerCase();let v=t.includes(i);
+items[x].style.display=v?"flex":"none";if(v)c++;
+}
+updateCategoryVisibility();
+document.getElementById("no-results").style.display=c===0?"block":"none";
+}
+function updateCategoryVisibility(){
+const sections=[{title:document.querySelector("h3.search-section:nth-of-type(1)"),list:document.getElementById("our-games")},{title:document.querySelector("h3.search-section:nth-of-type(2)"),list:document.getElementById("other-games")}];
+sections.forEach(sec=>{const visible=Array.from(sec.list.children).filter(i=>i.style.display!=="none");sec.title.style.display=visible.length>0?"block":"none";});
+}
+document.addEventListener("click",e=>{
+const m=document.getElementById("search-menu"),b=document.getElementById("search-btn");
+if(m.style.display==="flex"&&!m.contains(e.target)&&e.target!==b)closeSearchMenu();
+});
+function updateDateTime(){
+const n=new Date();
+const d=String(n.getDate()).padStart(2,"0");
+const m=String(n.getMonth()+1).padStart(2,"0");
+const y=String(n.getFullYear()).slice(2);
+const h=String(n.getHours()).padStart(2,"0");
+const mi=String(n.getMinutes()).padStart(2,"0");
+const full=n.toLocaleDateString("es-ES",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+const dateEl=document.getElementById("taskbar-date");
+const timeEl=document.getElementById("taskbar-time");
+const dtEl=document.querySelector(".taskbar-datetime");
+if(dateEl)dateEl.textContent=`${d}/${m}/${y}`;
+if(timeEl)timeEl.textContent=`${h}:${mi}`;
+if(dtEl)dtEl.setAttribute("data-full",full);
+}
 setInterval(updateDateTime,1000);updateDateTime();
-function sortSection(id){const s=document.getElementById(id);if(!s)return;const items=Array.from(s.children);items.sort((a,b)=>a.innerText.toLowerCase().localeCompare(b.innerText.toLowerCase()));items.forEach(i=>s.appendChild(i));}
+function sortSection(id){
+const s=document.getElementById(id);if(!s)return;
+const items=Array.from(s.children);
+items.sort((a,b)=>a.innerText.toLowerCase().localeCompare(b.innerText.toLowerCase()));
+items.forEach(i=>s.appendChild(i));
+}
 window.onload=()=>{sortSection("our-games");sortSection("other-games");registerWindow("settings","Ajustes","ajustes.png","settings-window");};
 </script>
 </body></html>
