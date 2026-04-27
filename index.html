@@ -7,7 +7,7 @@
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="SolarisGG-Logo.png?v=9999">
 
-<!-- Fuente principal -->
+<!-- Fuente -->
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -20,7 +20,62 @@
   }
 
   /* ===========================
-     PANTALLA DE LOGIN
+     PANTALLA DE CARGA
+     =========================== */
+  #loading-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    animation: fadeOut 1s ease forwards;
+    animation-delay: 3.5s;
+  }
+
+  #loading-logo {
+    width: 200px;
+    height: 200px;
+    animation: logoAnim 3s ease;
+  }
+
+  @keyframes logoAnim {
+    0% { opacity: 0; transform: scale(0.6); }
+    50% { opacity: 1; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.05); }
+  }
+
+  #loading-bar {
+    width: 300px;
+    height: 18px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.2);
+    margin-top: 25px;
+    overflow: hidden;
+  }
+
+  #loading-progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #00aaff, #00ffea);
+    animation: loadAnim 3s ease forwards;
+  }
+
+  @keyframes loadAnim {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
+
+  @keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+  }
+
+  /* ===========================
+     LOGIN
      =========================== */
   #login-screen {
     position: absolute;
@@ -71,7 +126,7 @@
   }
 
   /* ===========================
-     ESCRITORIO WINDOWS 11
+     ESCRITORIO
      =========================== */
   #desktop {
     width: 100%;
@@ -118,18 +173,26 @@
     text-shadow: 0 2px 4px rgba(0,0,0,0.7);
   }
 
-  /* BARRA DE TAREAS */
+  /* ===========================
+     BARRA DE TAREAS
+     =========================== */
   .taskbar {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 70px;
-    background: rgba(255,255,255,0.25);
-    backdrop-filter: blur(14px);
-    border-top: 1px solid rgba(255,255,255,0.4);
+    height: 80px;
+    background: rgba(255,255,255,0.30);
+    backdrop-filter: blur(18px);
+    border-top: 1px solid rgba(255,255,255,0.5);
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: taskbarAnim 1.2s ease;
+  }
+
+  @keyframes taskbarAnim {
+    0% { transform: translateY(100%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
   }
 
   .taskbar-icons {
@@ -152,10 +215,26 @@
   .taskbar-title {
     position: absolute;
     right: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 24px;
     color: white;
     text-shadow: 0 2px 6px rgba(0,0,0,0.6);
     font-weight: 700;
+  }
+
+  .taskbar-title img {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    animation: logoPulse 2s infinite ease-in-out;
+  }
+
+  @keyframes logoPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+    100% { transform: scale(1); }
   }
 </style>
 
@@ -167,6 +246,16 @@
 
 </head>
 <body>
+
+<!-- ===========================
+     LOADING SCREEN
+     =========================== -->
+<div id="loading-screen">
+  <img id="loading-logo" src="SolarisGG-Logo.png">
+  <div id="loading-bar">
+    <div id="loading-progress"></div>
+  </div>
+</div>
 
 <!-- ===========================
      LOGIN SCREEN
@@ -182,9 +271,7 @@
      =========================== -->
 <div id="desktop">
 
-  <!-- ICONOS -->
   <div class="icons">
-
     <div class="icon" onclick="location.href='ShootOut.html'">
       <img src="arma.png">
       <span>ShootOut</span>
@@ -194,10 +281,8 @@
       <img src="bloque.png">
       <span>GGCraft</span>
     </div>
-
   </div>
 
-  <!-- BARRA DE TAREAS -->
   <div class="taskbar">
     <div class="taskbar-icons">
       <img src="https://cdn-icons-png.flaticon.com/512/732/732221.png">
@@ -205,7 +290,10 @@
       <img src="https://cdn-icons-png.flaticon.com/512/732/732228.png">
     </div>
 
-    <div class="taskbar-title">SolarisGG</div>
+    <div class="taskbar-title">
+      <img src="SolarisGG-Logo.png">
+      SolarisGG
+    </div>
   </div>
 
 </div>
