@@ -61,56 +61,156 @@ body{height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;background:#00
 #settings-window{top:120px;left:120px;width:360px;height:230px}
 #zoyl-window{top:140px;left:220px;width:900px;height:600px}
 </style></head><body>
-<div id="loading-screen"><img id="loading-logo" src="SolarisGG-Logo.png"><div id="loading-bar"><div id="loading-progress"></div></div></div>
-<div id="login-screen"><img src="SolarisGG-Logo.png"><h1>SolarisGG</h1><button id="login-btn" onclick="login()">Iniciar sesión</button></div>
+
+<div id="loading-screen">
+  <img id="loading-logo" src="SolarisGG-Logo.png">
+  <div id="loading-bar"><div id="loading-progress"></div></div>
+</div>
+
+<div id="login-screen">
+  <img src="SolarisGG-Logo.png">
+  <h1>SolarisGG</h1>
+  <button id="login-btn" onclick="login()">Iniciar sesión</button>
+</div>
+
+<!-- DESKTOP -->
 <div id="desktop">
-<div class="icons">
 
-  <div class="icon" onclick="openApp('zoyl')">
-    <img src="ZOYLSolaris.png">
-    <span>ZOYL</span>
+  <div class="icons">
+
+    <div class="icon" onclick="openApp('zoyl')">
+      <img src="ZOYLSolaris.png">
+      <span>ZOYL</span>
+    </div>
+
+    <div class="icon" onclick="openApp('shootout')">
+      <img src="arma.png">
+      <span>ShootOut</span>
+    </div>
+
+    <div class="icon" onclick="openApp('ggcraft')">
+      <img src="bloque.png">
+      <span>GGCraft</span>
+    </div>
+
   </div>
 
-  <div class="icon" onclick="openApp('shootout')">
-    <img src="arma.png">
-    <span>ShootOut</span>
+  <!-- Ventana Ajustes -->
+  <div id="settings-window" class="window">
+    <div class="window-header">
+      <img class="window-header-icon" src="ajustes.png">
+      <div class="window-title">Ajustes</div>
+      <div class="window-buttons">
+        <button class="win-btn" onclick="minimizeApp('settings')">–</button>
+        <button class="win-btn" onclick="maximizeApp('settings')">□</button>
+        <button class="win-btn close" onclick="closeApp('settings')">X</button>
+      </div>
+    </div>
+    <div class="window-content">
+      <p>Seleccionar idioma:</p>
+      <select style="width:100%;padding:8px;border-radius:8px;border:none;outline:none;font-family:'Lexend'">
+        <option>Español</option>
+        <option>Inglés</option>
+        <option>Francés</option>
+      </select>
+    </div>
   </div>
 
-  <div class="icon" onclick="openApp('ggcraft')">
-    <img src="bloque.png">
-    <span>GGCraft</span>
+  <!-- Ventana ZOYL -->
+  <div id="zoyl-window" class="window">
+    <div class="window-header">
+      <img class="window-header-icon" src="ZOYLSolaris.png">
+      <div class="window-title">ZOYL</div>
+      <div class="window-buttons">
+        <button class="win-btn" onclick="minimizeApp('zoyl')">–</button>
+        <button class="win-btn" onclick="maximizeApp('zoyl')">□</button>
+        <button class="win-btn close" onclick="closeApp('zoyl')">X</button>
+      </div>
+    </div>
+    <div class="window-content">
+      <iframe src="https://turbowarp.org/805031560/embed" style="width:100%;height:100%;border:none;border-radius:8px"></iframe>
+    </div>
   </div>
 
+</div> <!-- FIN DESKTOP -->
+
+<!-- Ventana GGCraft -->
+<div id="ggcraft-window" class="window">
+  <div class="window-header">
+    <img class="window-header-icon" src="bloque.png">
+    <div class="window-title">GGCraft</div>
+    <div class="window-buttons">
+      <button class="win-btn" onclick="minimizeApp('ggcraft')">–</button>
+      <button class="win-btn" onclick="maximizeApp('ggcraft')">□</button>
+      <button class="win-btn close" onclick="closeApp('ggcraft')">X</button>
+    </div>
+  </div>
+  <div class="window-content">
+    <iframe src="GGCraft.html" style="width:100%;height:100%;border:none;border-radius:8px"></iframe>
+  </div>
 </div>
 
+<!-- Ventana ShootOut -->
+<div id="shootout-window" class="window">
+  <div class="window-header">
+    <img class="window-header-icon" src="arma.png">
+    <div class="window-title">ShootOut</div>
+    <div class="window-buttons">
+      <button class="win-btn" onclick="minimizeApp('shootout')">–</button>
+      <button class="win-btn" onclick="maximizeApp('shootout')">□</button>
+      <button class="win-btn close" onclick="closeApp('shootout')">X</button>
+    </div>
+  </div>
+  <div class="window-content">
+    <iframe src="ShootOut.html" style="width:100%;height:100%;border:none;border-radius:8px"></iframe>
+  </div>
+</div>
+
+<!-- BUSCADOR (FUERA DEL DESKTOP) -->
 <div id="search-menu">
-<input id="search-input" onkeyup="filterGames()" placeholder="Buscar juegos...">
-<h3 class="search-section" id="sec-our">Nuestros Juegos</h3>
-<div id="our-games">
-<div class="search-item" data-cat="our" onclick="openApp('zoyl')"><img src="ZOYLSolaris.png" class="search-icon"><span>ZOYL</span></div>
-<div class="icon" onclick="openApp('ggcraft')">
-  <img src="bloque.png"><span>GGCraft</span>
+  <input id="search-input" onkeyup="filterGames()" placeholder="Buscar juegos...">
+
+  <h3 class="search-section" id="sec-our">Nuestros Juegos</h3>
+  <div id="our-games">
+
+    <div class="search-item" data-cat="our" onclick="openApp('zoyl')">
+      <img src="ZOYLSolaris.png" class="search-icon"><span>ZOYL</span>
+    </div>
+
+    <div class="search-item" data-cat="our" onclick="openApp('ggcraft')">
+      <img src="bloque.png" class="search-icon"><span>GGCraft</span>
+    </div>
+
+    <div class="search-item" data-cat="our" onclick="openApp('shootout')">
+      <img src="arma.png" class="search-icon"><span>ShootOut</span>
+    </div>
+
+  </div>
+
+  <h3 class="search-section" id="sec-other">Otros Juegos</h3>
+  <div id="other-games">
+    <div class="search-item" data-cat="other" onclick="location.href='https://adsf1234-hacker.github.io/EaglercraftClients/eag1_9_4.html'">
+      <img src="mesa.png" class="search-icon"><span>Eaglercraft</span>
+    </div>
+  </div>
+
+  <p id="no-results">Su juego no está disponible.</p>
+  <img id="settings-btn-inside" src="ajustes.png" onclick="openApp('settings')">
 </div>
-<div class="icon" onclick="openApp('shootout')">
-  <img src="arma.png"><span>ShootOut</span>
-</div>
-</div>
-<h3 class="search-section" id="sec-other">Otros Juegos</h3>
-<div id="other-games">
-<div class="search-item" data-cat="other" onclick="location.href='https://adsf1234-hacker.github.io/EaglercraftClients/eag1_9_4.html'"><img src="mesa.png" class="search-icon"><span>Eaglercraft</span></div>
-</div>
-<p id="no-results">Su juego no está disponible.</p>
-<img id="settings-btn-inside" src="ajustes.png" onclick="openApp('settings')">
-</div>
+
+<!-- TASKBAR (FUERA DEL DESKTOP) -->
 <div class="taskbar">
-<img id="search-btn" src="lupa.png">
-<div id="taskbar-apps"></div>
-<div class="taskbar-right">
-<span class="taskbar-datetime" id="taskbar-short">--/--/-- | --:--</span>
-<div class="taskbar-title"><img src="SolarisGG-Logo.png"><span>SolarisGG</span></div>
+  <img id="search-btn" src="lupa.png">
+  <div id="taskbar-apps"></div>
+  <div class="taskbar-right">
+    <span class="taskbar-datetime" id="taskbar-short">--/--/-- | --:--</span>
+    <div class="taskbar-title">
+      <img src="SolarisGG-Logo.png"><span>SolarisGG</span>
+    </div>
+  </div>
 </div>
-</div>
-<div id="date-tooltip"></div>
+
+<div id="date-tooltip">
 <div id="settings-window" class="window">
 <div class="window-header"><img class="window-header-icon" src="ajustes.png"><div class="window-title">Ajustes</div><div class="window-buttons"><button class="win-btn" onclick="minimizeApp('settings')">–</button><button class="win-btn" onclick="maximizeApp('settings')">□</button><button class="win-btn close" onclick="closeApp('settings')">X</button></div></div>
 <div class="window-content"><p>Seleccionar idioma:</p><select style="width:100%;padding:8px;border-radius:8px;border:none;outline:none;font-family:'Lexend'"><option>Español</option><option>Inglés</option><option>Francés</option></select></div>
@@ -157,8 +257,6 @@ body{height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;background:#00
     <iframe src="ShootOut.html" style="width:100%;height:100%;border:none;border-radius:8px"></iframe>
   </div>
 </div>
-
-//FINVENTANAS
 
 <script>
 let z=50;const winReg={};
