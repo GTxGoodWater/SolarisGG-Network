@@ -112,7 +112,27 @@ document.addEventListener("click",e=>{if(searchMenu.style.display==="flex"&&!sea
 function registerWindow(id,icon,winId){const win=document.getElementById(winId),bar=document.getElementById("taskbar-apps");const wrap=document.createElement("div");wrap.className="taskbar-app-icon-wrapper";wrap.style.display="none";const ic=document.createElement("img");ic.src=icon;ic.className="taskbar-app-icon";ic.onclick=()=>toggleFromTaskbar(id);const ind=document.createElement("div");ind.className="taskbar-indicator";wrap.appendChild(ic);wrap.appendChild(ind);bar.appendChild(wrap);winReg[id]={win,icon:ic,wrap,ind,isOpen:false,isMin:false,isMax:false,prev:{x:0,y:0,w:0,h:0}};win.dataset.id=id;win.addEventListener("mousedown",()=>bring(id));}
 function bring(id){z++;winReg[id].win.style.zIndex=z;}
 function openApp(id){const w=winReg[id];w.win.classList.remove("closing","minimizing");w.win.style.display="flex";w.wrap.style.display="flex";w.ind.style.opacity="1";w.isOpen=true;w.isMin=false;w.icon.classList.add("active");bring(id);}
-function closeApp(id){const w=winReg[id];w.win.classList.add("closing");setTimeout(()=>{w.win.style.display="none";w.wrap.style.display="none";w.ind.style.opacity="0";w.isOpen=false;w.isMin=false;w.isMax=false;w.icon.classList.remove("active");w.win.classList.remove("closing");},180);}
+function closeApp(id){
+    const w = winReg[id];
+
+    // Matar proceso del juego ZOYL
+    if(id === "zoyl"){
+        const frame = document.querySelector("#zoyl-window iframe");
+        frame.src = frame.src;
+    }
+
+    w.win.classList.add("closing");
+    setTimeout(()=>{
+        w.win.style.display="none";
+        w.wrap.style.display="none";
+        w.ind.style.opacity="0";
+        w.isOpen=false;
+        w.isMin=false;
+        w.isMax=false;
+        w.icon.classList.remove("active");
+        w.win.classList.remove("closing");
+    },180);
+}
 function minimizeApp(id){const w=winReg[id];w.win.classList.add("minimizing");setTimeout(()=>{w.win.style.display="none";w.isMin=true;w.ind.style.opacity=.35;w.icon.classList.remove("active");w.win.classList.remove("minimizing");},180);}
 function maximizeApp(id){const w=winReg[id],el=w.win;el.style.transition="all .25s cubic-bezier(.2,.8,.2,1)";if(!w.isMax){w.prev={x:el.offsetLeft,y:el.offsetTop,w:el.offsetWidth,h:el.offsetHeight};el.style.left="0px";el.style.top="0px";el.style.width=innerWidth+"px";el.style.height=(innerHeight-70)+"px";w.isMax=true;}else{el.style.left=w.prev.x+"px";el.style.top=w.prev.y+"px";el.style.width=w.prev.w+"px";el.style.height=w.prev.h+"px";w.isMax=false;}}
 function toggleFromTaskbar(id){const w=winReg[id];(!w.isOpen||w.isMin)?openApp(id):minimizeApp(id);}
