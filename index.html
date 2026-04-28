@@ -4,6 +4,12 @@ body{height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;background:#00
 #loading-screen{position:absolute;inset:0;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:100000;animation:fadeOut 1s ease forwards;animation-delay:3.5s}
 #loading-logo{width:200px;height:200px;animation:logoAnim 3s ease}
 #loading-bar{width:300px;height:18px;border-radius:10px;background:rgba(255,255,255,.2);margin-top:25px;overflow:hidden}
+#chrome-window{
+    top:160px;
+    left:260px;
+    width:700px;
+    height:400px;
+}
 #loading-progress{width:0;height:100%;background:linear-gradient(90deg,#00aaff,#00ffea);animation:loadAnim 3s ease forwards}
 @keyframes logoAnim{0%{opacity:0;transform:scale(.6)}50%{opacity:1;transform:scale(1)}100%{opacity:1;transform:scale(1.05)}}
 @keyframes loadAnim{0%{width:0}100%{width:100%}}
@@ -78,6 +84,11 @@ body{height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;background:#00
 
   <div class="icons">
 
+    <div class="icon" onclick="openApp('chrome')">
+       <img src="chrome.png">
+      <span>Chrome</span>
+    </div>
+
     <div class="icon" onclick="openApp('zoyl')">
       <img src="ZOYLSolaris.png">
       <span>ZOYL</span>
@@ -115,6 +126,24 @@ body{height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;background:#00
       </select>
     </div>
   </div>
+
+  <!-- Ventana Chrome -->
+<div id="chrome-window" class="window">
+  <div class="window-header">
+    <img class="window-header-icon" src="chrome.png">
+    <div class="window-title">Google Chrome</div>
+    <div class="window-buttons">
+      <button class="win-btn" onclick="minimizeApp('chrome')">–</button>
+      <button class="win-btn" onclick="maximizeApp('chrome')">□</button>
+      <button class="win-btn close" onclick="closeApp('chrome')">X</button>
+    </div>
+  </div>
+
+  <div class="window-content">
+    <iframe src="https://www.google.com/webhp?igu=1"
+            style="width:100%;height:100%;border:none;border-radius:8px"></iframe>
+  </div>
+</div>
 
   <!-- Ventana ZOYL -->
   <div id="zoyl-window" class="window">
@@ -307,6 +336,11 @@ function filterGames(){const q=document.getElementById("search-input").value.toL
 function updateDateTime(){const n=new Date(),d=String(n.getDate()).padStart(2,"0"),mo=String(n.getMonth()+1).padStart(2,"0"),y=String(n.getFullYear()).slice(2),h=String(n.getHours()).padStart(2,"0"),mi=String(n.getMinutes()).padStart(2,"0");const short=`${d}/${mo}/${y} | ${h}:${mi}`;document.getElementById("taskbar-short").textContent=short;const days=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"],months=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];const detailed=`${days[n.getDay()]}, ${n.getDate()} de ${months[n.getMonth()]} de ${n.getFullYear()} — ${h}:${mi}`;document.getElementById("date-tooltip").textContent=detailed;}
 setInterval(updateDateTime,1000);updateDateTime();
 const dtHover=document.getElementById("taskbar-short"),tooltip=document.getElementById("date-tooltip");dtHover.addEventListener("mouseenter",()=>{tooltip.style.display="block";});dtHover.addEventListener("mouseleave",()=>{tooltip.style.display="none";});
-window.onload=()=>{registerWindow("settings","ajustes.png","settings-window");registerWindow("zoyl","ZOYLSolaris.png","zoyl-window");registerWindow("ggcraft", "bloque.png", "ggcraft-window");registerWindow("shootout", "arma.png", "shootout-window");};
+window.onload=()=>{
+    registerWindow("settings","ajustes.png","settings-window");
+    registerWindow("zoyl","ZOYLSolaris.png","zoyl-window");
+    registerWindow("ggcraft", "bloque.png", "ggcraft-window");
+    registerWindow("shootout", "arma.png", "shootout-window");};
+    registerWindow("chrome", "chrome.png", "chrome-window");
 </script>
 </body></html>
