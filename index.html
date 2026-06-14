@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>SolarisGG</title>
 
-    <!-- ICONO DE LA PESTAÑA -->
     <link rel="icon" type="image/png" href="SolarisGG-Logo.png">
 
     <style>
@@ -51,7 +50,7 @@
 <body>
 
     <div class="topbar">
-        <img src="SolarisGGweb.png" alt="SolarisGG Logo">
+        <img src="SolarisGGWeb.png" alt="SolarisGG Logo">
     </div>
 
     <!-- CARRUSEL -->
@@ -62,33 +61,39 @@
             <img src="Image3C.png">
             <img src="Image4C.png">
             <img src="Image5C.png">
+            <img src="Image6C.png">
+            <img src="Image7C.png">
+
+            <!-- DUPLICAMOS LA PRIMERA PARA UN LOOP PERFECTO -->
+            <img src="Image1C.png">
         </div>
     </div>
 
     <script>
         const track = document.getElementById("track");
-        const total = 5; // número de imágenes
+        const total = 8; // 7 + 1 duplicada
         let index = 0;
 
         setInterval(() => {
             index++;
 
-            if (index === total) {
-                // Reinicio suave sin salto
-                track.style.transition = "none";
-                track.style.transform = "translateX(0)";
-                index = 1;
+            track.style.transform = `translateX(-${index * 100}%)`;
 
-                // Reaplicar transición después de un frame
+            // Cuando llega a la duplicada, reinicia sin que se note
+            if (index === total - 1) {
                 setTimeout(() => {
-                    track.style.transition = "transform 0.8s ease";
-                    track.style.transform = `translateX(-${index * 100}%)`;
-                }, 20);
-            } else {
-                track.style.transform = `translateX(-${index * 100}%)`;
+                    track.style.transition = "none";
+                    track.style.transform = "translateX(0)";
+                    index = 0;
+
+                    // Reaplicar transición después de un frame
+                    setTimeout(() => {
+                        track.style.transition = "transform 0.8s ease";
+                    }, 20);
+                }, 800); // esperar a que termine la animación
             }
 
-        }, 5000); // 5 segundos
+        }, 5000);
     </script>
 
 </body>
