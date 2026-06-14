@@ -19,9 +19,10 @@
         body {
             margin: 0;
             background: #FFE48A;
-            overflow-x: hidden; /* ❗ Evita desplazamiento horizontal */
+            overflow-x: hidden;
         }
 
+        /* BARRA SUPERIOR */
         .topbar {
             width: 100%;
             height: 60px;
@@ -71,10 +72,28 @@
         .carousel-container img.active {
             opacity: 1;
         }
+
+        /* CUADRO BLANCO */
+        .info-box {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 18px 28px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 400;
+            color: #000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            width: fit-content;
+            max-width: 90%;
+        }
     </style>
 </head>
 <body>
 
+    <!-- BARRA SUPERIOR -->
     <div class="topbar">
         <img src="SolarisGGWeb.png" alt="SolarisGG Logo">
 
@@ -92,6 +111,13 @@
         <img src="Image5C.png">
         <img src="Image6C.png">
         <img src="Image7C.png">
+
+        <!-- CUADRO BLANCO -->
+        <div class="info-box">
+            <b>¡Únete a SolarisGG!</b><br>
+            <b>IP:</b> mc.solarisgg.xubi.org<br>
+            <b>Puerto (Bedrock):</b> 19132
+        </div>
     </div>
 
     <script>
