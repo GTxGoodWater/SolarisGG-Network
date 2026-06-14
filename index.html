@@ -10,7 +10,7 @@
     <style>
         body {
             margin: 0;
-            background: #FFE48A; /* Fondo de toda la página */
+            background: #FFE48A;
         }
 
         .topbar {
@@ -37,7 +37,6 @@
 
         .carousel-track {
             display: flex;
-            width: 500%;
             height: 100%;
             transition: transform 0.8s ease;
         }
@@ -52,28 +51,44 @@
 <body>
 
     <div class="topbar">
-        <img src="SolarisGGWeb.png" alt="SolarisGG Logo">
+        <img src="SolarisGGweb.png" alt="SolarisGG Logo">
     </div>
 
     <!-- CARRUSEL -->
     <div class="carousel-container">
         <div class="carousel-track" id="track">
-            <img src="Image1C.png" alt="Imagen 1">
-            <img src="Image2C.png" alt="Imagen 2">
-            <img src="Image3C.png" alt="Imagen 3">
-            <img src="Image4C.png" alt="Imagen 4">
-            <img src="Image5C.png" alt="Imagen 5">
+            <img src="Image1C.png">
+            <img src="Image2C.png">
+            <img src="Image3C.png">
+            <img src="Image4C.png">
+            <img src="Image5C.png">
         </div>
     </div>
 
     <script>
-        let index = 0;
         const track = document.getElementById("track");
+        const total = 5; // número de imágenes
+        let index = 0;
 
         setInterval(() => {
-            index = (index + 1) % 5;
-            track.style.transform = `translateX(-${index * 100}%)`;
-        }, 5000);
+            index++;
+
+            if (index === total) {
+                // Reinicio suave sin salto
+                track.style.transition = "none";
+                track.style.transform = "translateX(0)";
+                index = 1;
+
+                // Reaplicar transición después de un frame
+                setTimeout(() => {
+                    track.style.transition = "transform 0.8s ease";
+                    track.style.transform = `translateX(-${index * 100}%)`;
+                }, 20);
+            } else {
+                track.style.transform = `translateX(-${index * 100}%)`;
+            }
+
+        }, 5000); // 5 segundos
     </script>
 
 </body>
