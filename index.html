@@ -32,8 +32,25 @@
             padding: 0 20px;
         }
 
+        .left-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .right-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
         .topbar img {
             height: 45px;
+        }
+
+        .yt-icon {
+            height: 32px;
+            cursor: pointer;
         }
 
         /* BOTÓN DISCORD */
@@ -75,7 +92,7 @@
         /* CUADRO BLANCO */
         .info-box {
             position: absolute;
-            bottom: 40px; /* MÁS ABAJO */
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
             background: white;
@@ -89,7 +106,7 @@
             max-width: 90%;
         }
 
-        /* SLIDE BOX (IP COPIADA) */
+        /* SLIDE BOX */
         .slide-box {
             position: fixed;
             bottom: -80px;
@@ -109,17 +126,59 @@
             bottom: 30px;
             opacity: 1;
         }
+
+        /* SECCIÓN JAVA / BEDROCK */
+        .version-section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+
+        .version-box {
+            text-align: center;
+        }
+
+        .version-box img {
+            height: 60px;
+            margin-bottom: 10px;
+        }
+
+        .version-title {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .version-number {
+            margin-top: 8px;
+            font-size: 18px;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
 
     <!-- BARRA SUPERIOR -->
     <div class="topbar">
-        <img src="SolarisGGWeb.png" alt="SolarisGG Logo">
 
-        <a class="discord-btn" href="https://discord.gg/tu-invitacion" target="_blank">
-            Únete a Discord
-        </a>
+        <div class="left-icons">
+            <img src="SolarisGGWeb.png" alt="SolarisGG Logo">
+        </div>
+
+        <div class="right-icons">
+            <!-- ICONO YOUTUBE -->
+            <a href="https://www.youtube.com/@GoodFireStudios" target="_blank">
+                <img src="youtubelogo.png" class="yt-icon">
+            </a>
+
+            <!-- BOTÓN DISCORD -->
+            <a class="discord-btn" href="https://discord.gg/tu-invitacion" target="_blank">
+                Únete a Discord
+            </a>
+        </div>
+
     </div>
 
     <!-- CARRUSEL FADE -->
@@ -142,6 +201,23 @@
 
     <!-- SLIDE BOX -->
     <div id="slideBox" class="slide-box">IP COPIADA</div>
+
+    <!-- SECCIÓN JAVA / BEDROCK -->
+    <div class="version-section">
+
+        <div class="version-box">
+            <img src="java.png">
+            <div class="version-title">JAVA</div>
+            <div class="version-number">[1.21.11 - 26.X]</div>
+        </div>
+
+        <div class="version-box">
+            <img src="bedrock.png">
+            <div class="version-title">BEDROCK</div>
+            <div class="version-number">[1.21.11 - 26.X]</div>
+        </div>
+
+    </div>
 
     <script>
         /* CARRUSEL */
