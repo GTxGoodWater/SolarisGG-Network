@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>SolarisGG</title>
 
-    <!-- ICONO DE LA PESTAÑA -->
     <link rel="icon" type="image/png" href="SolarisGG-Logo.png">
 
     <!-- FUENTE LEXEND -->
@@ -76,7 +75,7 @@
         /* CUADRO BLANCO */
         .info-box {
             position: absolute;
-            bottom: 20px;
+            bottom: 40px; /* MÁS ABAJO */
             left: 50%;
             transform: translateX(-50%);
             background: white;
@@ -88,6 +87,27 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.25);
             width: fit-content;
             max-width: 90%;
+        }
+
+        /* SLIDE BOX (IP COPIADA) */
+        .slide-box {
+            position: fixed;
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 9999;
+        }
+
+        .slide-box.show {
+            bottom: 30px;
+            opacity: 1;
         }
     </style>
 </head>
@@ -115,12 +135,16 @@
         <!-- CUADRO BLANCO -->
         <div class="info-box">
             <b>¡Únete a SolarisGG!</b><br>
-            <b>IP:</b> mc.solarisgg.xubi.org<br>
+            <b>IP:</b> <span id="copyIP" style="cursor:pointer; text-decoration:underline;">mc.solarisgg.xubi.org</span><br>
             <b>Puerto (Bedrock):</b> 19132
         </div>
     </div>
 
+    <!-- SLIDE BOX -->
+    <div id="slideBox" class="slide-box">IP COPIADA</div>
+
     <script>
+        /* CARRUSEL */
         const images = document.querySelectorAll(".carousel-container img");
         let index = 0;
 
@@ -129,6 +153,20 @@
             index = (index + 1) % images.length;
             images[index].classList.add("active");
         }, 5000);
+
+        /* COPIAR IP + SLIDE BOX */
+        const copyIP = document.getElementById("copyIP");
+        const slideBox = document.getElementById("slideBox");
+
+        copyIP.addEventListener("click", () => {
+            navigator.clipboard.writeText("mc.solarisgg.xubi.org");
+
+            slideBox.classList.add("show");
+
+            setTimeout(() => {
+                slideBox.classList.remove("show");
+            }, 2000);
+        });
     </script>
 
 </body>
